@@ -1,0 +1,633 @@
+/* =========================================================
+RUFFIANA — COLECCIÓN
+Diseño de categorías, productos y paginación
+========================================================= */
+
+/* =========================================================
+CONTENEDOR PRINCIPAL
+========================================================= */
+
+.collection {
+width: 100%;
+padding: 70px 0 100px;
+}
+
+.collection .container {
+width: 92%;
+max-width: 1400px;
+margin: 0 auto;
+}
+
+/* =========================================================
+ENCABEZADO
+========================================================= */
+
+.collection-header {
+text-align: center;
+margin-top: 45px;
+margin-bottom: 45px;
+}
+
+
+.collection-header h1 {
+margin: 0;
+
+font-family: var(--title-font);
+font-size: 2rem;
+font-weight: 500;
+letter-spacing: 3px;
+
+color: var(--color-dark);
+
+
+}
+
+
+/* =========================================================
+CATEGORÍAS
+========================================================= */
+
+.collection-categories {
+width: 100%;
+
+
+display: flex;
+justify-content: center;
+align-items: center;
+flex-wrap: wrap;
+
+gap: 8px;
+
+margin-bottom: 45px;
+
+border-top: 1px solid #eee8e3;
+border-bottom: 1px solid #eee8e3;
+
+padding: 18px 0;
+
+
+}
+
+.collection-category-button {
+border: none;
+background: transparent;
+
+padding: 9px 16px;
+
+font-family: var(--title-font);
+font-size: 0.68rem;
+font-weight: 500;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+
+color: #777;
+
+cursor: pointer;
+
+transition:
+    color 0.25s ease,
+    background 0.25s ease;
+
+}
+
+.collection-category-button:hover {
+color: var(--color-dark);
+}
+
+.collection-category-button.active {
+background: var(--color-navbar);
+color: var(--color-white);
+}
+
+/* =========================================================
+BARRA DE RESULTADOS
+========================================================= */
+
+.collection-toolbar {
+display: flex;
+justify-content: space-between;
+align-items: center;
+
+
+margin-bottom: 25px;
+
+
+}
+
+.collection-results {
+margin: 0;
+
+font-family: var(--title-font);
+font-size: 0.68rem;
+font-weight: 500;
+letter-spacing: 1.2px;
+text-transform: uppercase;
+
+color: #777;
+
+
+}
+
+/* =========================================================
+GRILLA DE PRODUCTOS
+========================================================= */
+
+.products-section {
+width: 100%;
+}
+
+.products-grid {
+width: 100%;
+
+display: grid;
+
+grid-template-columns: repeat(4, minmax(0, 1fr));
+
+gap: 45px 22px;
+padding: 0 60px;
+
+}
+
+/* =========================================================
+TARJETA
+========================================================= */
+
+.product-card {
+min-width: 0;
+
+
+background: transparent;
+
+transition:
+    transform 0.3s ease;
+
+
+}
+
+.product-card:hover {
+transform: translateY(-3px);
+}
+
+/* =========================================================
+IMAGEN
+========================================================= */
+
+.product-card .product-image {
+width: 100%;
+
+
+aspect-ratio: 4 / 5;
+
+overflow: hidden;
+
+background: #f7f5f3;
+
+cursor: pointer;
+
+
+}
+
+.product-card .product-image img {
+width: 100%;
+height: 100%;
+
+display: block;
+
+object-fit: cover;
+
+transition:
+    transform 0.5s ease;
+
+
+}
+
+.product-card:hover .product-image img {
+transform: scale(1.035);
+}
+
+/* =========================================================
+INFORMACIÓN DEL PRODUCTO
+========================================================= */
+
+.product-info {
+padding: 15px 2px 0;
+}
+
+.product-info h3 {
+margin: 0 0 7px;
+font-family: var(--title-font);
+font-size: 0.8rem;
+font-weight: 500;
+letter-spacing: 0.8px;
+line-height: 1.4;
+color: var(--color-dark);
+}
+
+.product-price {
+margin: 0;
+font-family: var(--title-font);
+font-size: 0.82rem;
+font-weight: 500;
+color: var(--color-dark);
+font-weight: 600;
+
+
+}
+
+/* para que no aparezcan las variantes */
+.product-variants {
+display: none;
+}
+
+.product-description {
+display: none;
+}
+
+/* =========================================================
+BOTÓN VER PRODUCTO
+========================================================= */
+
+.product-card .add-to-cart {
+width: 100%;
+
+
+margin-top: 16px;
+padding: 12px 15px;
+
+border: 1px solid var(--color-navbar);
+
+background: transparent;
+
+color: var(--color-navbar);
+
+font-family: var(--title-font);
+font-size: 0.65rem;
+font-weight: 500;
+letter-spacing: 1.5px;
+
+cursor: pointer;
+
+transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+
+
+}
+
+.product-card .add-to-cart:hover {
+background: var(--color-navbar);
+color: var(--color-white);
+}
+
+.product-card .add-to-cart.disabled {
+border-color: #d4d0cc;
+
+
+background: #d4d0cc;
+
+color: #777;
+
+cursor: not-allowed;
+
+
+}
+
+.product-card .add-to-cart.disabled:hover {
+background: #d4d0cc;
+color: #777;
+}
+
+/* =========================================================
+SIN RESULTADOS
+========================================================= */
+
+.collection-empty {
+grid-column: 1 / -1;
+
+
+padding: 90px 20px;
+
+text-align: center;
+
+
+}
+
+.collection-empty h2 {
+margin: 0 0 12px;
+
+
+font-family: var(--title-font);
+font-size: 1.2rem;
+font-weight: 500;
+letter-spacing: 1px;
+
+color: var(--color-dark);
+
+}
+
+.collection-empty p {
+margin: 0;
+
+
+font-size: 0.8rem;
+line-height: 1.6;
+
+color: #888;
+
+
+}
+
+/* =========================================================
+PAGINACIÓN
+========================================================= */
+
+.collection-pagination {
+display: flex;
+justify-content: center;
+align-items: center;
+
+
+gap: 6px;
+
+margin-top: 65px;
+
+
+}
+
+.collection-page-button {
+min-width: 38px;
+height: 38px;
+
+
+padding: 0 10px;
+
+border: 1px solid #ddd5cf;
+
+background: transparent;
+
+color: #555;
+
+font-family: var(--title-font);
+font-size: 0.7rem;
+
+cursor: pointer;
+
+transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+
+
+}
+
+.collection-page-button:hover {
+border-color: var(--color-navbar);
+
+
+color: var(--color-navbar);
+
+
+}
+
+.collection-page-button.active {
+border-color: var(--color-navbar);
+
+
+background: var(--color-navbar);
+
+color: var(--color-white);
+
+
+}
+
+.collection-page-button.disabled {
+opacity: 0.35;
+
+
+cursor: not-allowed;
+
+
+}
+
+/* =========================================================
+TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+
+.products-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 38px 18px;
+}
+
+
+}
+
+/* =========================================================
+TABLET PEQUEÑA
+========================================================= */
+
+@media (max-width: 800px) {
+
+
+.collection {
+    padding: 55px 0 80px;
+}
+
+.collection .container {
+    width: 94%;
+}
+
+.collection-header {
+    margin-bottom: 35px;
+}
+
+.collection-header h1 {
+    font-size: 1.6rem;
+}
+
+.collection-categories {
+    justify-content: flex-start;
+
+    overflow-x: auto;
+    flex-wrap: nowrap;
+
+    padding: 14px 2px;
+
+    scrollbar-width: none;
+}
+
+.collection-categories::-webkit-scrollbar {
+    display: none;
+}
+
+.collection-category-button {
+    flex: 0 0 auto;
+}
+
+.products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 35px 14px;
+}
+
+
+}
+
+/* =========================================================
+CELULAR
+========================================================= */
+
+@media (max-width: 600px) {
+
+.collection {
+    padding: 40px 0 65px;
+}
+
+.collection .container {
+    width: 92%;
+}
+
+
+/* Encabezado */
+
+.collection-header {
+    margin-bottom: 28px;
+}
+
+.collection-eyebrow {
+    font-size: 0.58rem;
+    letter-spacing: 2.5px;
+}
+
+.collection-header h1 {
+    font-size: 1.35rem;
+    letter-spacing: 2px;
+}
+
+.collection-subtitle {
+    max-width: 320px;
+
+    margin-top: 14px;
+
+    font-size: 0.75rem;
+}
+
+
+/* Categorías */
+
+.collection-categories {
+    margin-bottom: 30px;
+
+    gap: 3px;
+
+    padding: 11px 0;
+}
+
+.collection-category-button {
+    padding: 8px 12px;
+
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+}
+
+
+/* Resultados */
+
+.collection-toolbar {
+    margin-bottom: 20px;
+}
+
+.collection-results {
+    font-size: 0.6rem;
+}
+
+
+/* Productos */
+
+.products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 30px 10px;
+}
+
+.product-info {
+    padding-top: 11px;
+}
+
+.product-info h3 {
+    font-size: 0.68rem;
+}
+
+.product-price {
+    font-size: 0.7rem;
+}
+
+.product-variants {
+    font-size: 0.6rem;
+}
+
+.product-description {
+    font-size: 0.62rem;
+}
+
+
+/* Botón */
+
+.product-card .add-to-cart {
+    margin-top: 11px;
+
+    padding: 10px 8px;
+
+    font-size: 0.58rem;
+    letter-spacing: 1px;
+}
+
+
+/* Paginación */
+
+.collection-pagination {
+    margin-top: 45px;
+
+    gap: 4px;
+}
+
+.collection-page-button {
+    min-width: 34px;
+    height: 34px;
+
+    font-size: 0.62rem;
+}
+
+
+}
+
+/* =========================================================
+CELULAR MUY PEQUEÑO
+========================================================= */
+
+@media (max-width: 380px) {
+
+
+.products-grid {
+    gap: 25px 8px;
+}
+
+.product-card .add-to-cart {
+    font-size: 0.52rem;
+}
+
+}
+
+/* =========================================================
+PAGINACIÓN
+========================================================= */
+
+.collection-pagination {
+    margin-top: 50px;
+    margin-bottom: 60px;
+}
+

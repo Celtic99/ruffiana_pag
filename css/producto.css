@@ -173,7 +173,7 @@
 
 
 /* =========================================================
-   DESCRIPCIÓN
+   DESCRIPCIÓN dentro del producto
 ========================================================= */
 
 .product-description {
@@ -432,3 +432,172 @@
     }
 
 }
+
+
+/* =========================================================
+   VARIANTES — RUFFIANA
+========================================================= */
+
+.product-variant-selector {
+    margin-top: 24px;
+}
+
+
+/* =========================================================
+   TÍTULOS COLOR / TALLE
+========================================================= */
+
+.product-detail-color,
+.product-detail-size {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    margin-bottom: 12px;
+
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+
+    color: #555;
+}
+
+
+.product-detail-color strong,
+.product-detail-size strong {
+    font-weight: 600;
+    color: #212121;
+}
+
+
+/* =========================================================
+   CONTENEDOR DE OPCIONES
+========================================================= */
+
+.product-color-options,
+.product-size-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+
+/* =========================================================
+   BOTONES DE COLOR
+========================================================= */
+
+.product-color-option {
+    min-width: 70px;
+
+    padding: 11px 16px;
+
+    border: 1px solid #ddd;
+    background: #fff;
+
+    font-family: inherit;
+    font-size: 12px;
+
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    color: #444;
+
+    cursor: pointer;
+
+    transition:
+        all 0.25s ease;
+}
+
+
+.product-color-option:hover {
+    border-color: #866b50;
+
+    transform: translateY(-2px);
+}
+
+
+/* COLOR ACTIVO */
+
+.product-color-option.active {
+    background: #866b50;
+    border-color: #866b50;
+
+    color: #fff;
+}
+
+
+/* =========================================================
+   BOTONES DE TALLES
+========================================================= */
+
+.product-size-option {
+    width: 48px;
+    height: 45px;
+
+    border: 1px solid #ddd;
+    background: #fff;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+
+    color: #333;
+
+    cursor: pointer;
+
+    transition:
+        all 0.25s ease;
+}
+
+
+.product-size-option:hover {
+    border-color: #866b50;
+
+    transform: translateY(-2px);
+}
+
+
+/* TALLE ACTIVO */
+
+.product-size-option.active {
+    background: #212121;
+    border-color: #212121;
+
+    color: #fff;
+}
+
+
+/* =========================================================
+   EFECTO CLICK
+========================================================= */
+
+.product-color-option:active,
+.product-size-option:active {
+    transform: scale(0.96);
+}
+
+
+/* =========================================================
+MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .product-variant-selector {
+        margin-top: 20px;
+    }
+
+
+    .product-color-option {
+        padding: 10px 14px;
+    }
+
+
+    .product-size-option {
+        width: 45px;
+        height: 43px;
+    }
+
+}
+

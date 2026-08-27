@@ -264,3 +264,166 @@ ESTADO ABIERTO DEL MENÚ
     line-height: 1;
 
 }
+
+/* =========================================================
+   RUFFIANA — BUSCADOR
+========================================================= */
+
+.nav-left {
+    position: relative;
+}
+
+
+/* CONTENEDOR */
+
+.ruffiana-search-container {
+
+    display: flex;
+
+    align-items: center;
+
+    position: absolute;
+
+    left: 38px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%)
+        scaleX(0);
+
+    transform-origin: left center;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    width: 0;
+
+    overflow: hidden;
+
+    transition:
+        width 0.3s ease,
+        opacity 0.2s ease,
+        transform 0.3s ease;
+
+}
+
+
+/* ABIERTO */
+
+.ruffiana-search-container.active {
+
+    width: 260px;
+
+    opacity: 1;
+
+    pointer-events: auto;
+
+    transform:
+        translateY(-50%)
+        scaleX(1);
+
+}
+
+
+/* INPUT */
+
+.ruffiana-search-input {
+
+    width: 100%;
+
+    height: 38px;
+
+    border: none;
+
+    border-bottom:
+        1px solid var(--accent);
+
+    background: transparent;
+
+    outline: none;
+
+    padding:
+        0 35px 0 8px;
+
+    font-family:
+        Montserrat,
+        sans-serif;
+
+    font-size: 13px;
+
+    color:#f0eeee;;
+
+}
+
+
+/* PLACEHOLDER */
+
+.ruffiana-search-input::placeholder {
+
+    color: #f0eeee;
+
+    letter-spacing:
+        0.5px;
+
+}
+
+
+/* QUITAR LA "X" NATIVA DEL INPUT SEARCH */
+
+.ruffiana-search-input::-webkit-search-cancel-button {
+
+    -webkit-appearance: none;
+
+    appearance: none;
+
+    display: none;
+
+}
+
+
+/* CRUZ PRINCIPAL */
+
+.ruffiana-search-close {
+
+    position: absolute;
+
+    right: 5px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    border: none;
+
+    background: transparent;
+
+    padding: 5px;
+
+    cursor: pointer;
+
+    font-size: 22px;
+
+    line-height: 1;
+
+    color:
+        var(--dark);
+
+    font-family:
+        Arial,
+        sans-serif;
+
+}
+
+
+/* LUPA OCULTA MIENTRAS BUSCA */
+
+.search-button.search-hidden {
+
+    opacity: 0;
+
+    pointer-events: none;
+
+}

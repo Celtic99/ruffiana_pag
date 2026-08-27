@@ -13,14 +13,10 @@
 
     <title>Colección | RUFFIANA</title>
 
+        <!-- CSS -->
     <link
         rel="stylesheet"
         href="../css/style.css"
-    >
-    
-    <link
-        rel="stylesheet"
-        href="../css/header.css"
     >
 
     <link
@@ -30,8 +26,14 @@
 
     <link
         rel="stylesheet"
+        href="../css/coleccion.css"
+    >    
+
+    <link
+        rel="stylesheet"
         href="../css/responsive.css"
     >
+
 
     <link
         rel="stylesheet"
@@ -44,24 +46,34 @@
 <body>
 
 
-    <!-- ================= HEADER ================= -->
+       <!-- =====================================================
+    HEADER
+    ====================================================== -->
 
     <header class="header">
 
-        <section class="adbar">
+
+        <!-- Barra de anuncio -->
+
+        <div class="adbar">
 
             <p>
                 10% OFF EN TRANSFERENCIA //
-                ENVÍO GRATIS A TODO EL PAÍS EN COMPRAS SUPERIORES A $120.000
+                ENVÍO GRATIS A TODO EL PAÍS EN COMPRAS
+                SUPERIORES A $120.000 //
             </p>
 
-        </section>
+        </div>
 
+
+        <!-- Navegación -->
 
         <nav class="navbar">
 
             <div class="nav-items-container">
 
+
+                <!-- Navegación izquierda -->
 
                 <div class="nav-left">
 
@@ -72,9 +84,7 @@
                         aria-expanded="false"
                         aria-controls="mobile-navigation"
                     >
-
                         <i class="fa-solid fa-bars"></i>
-
                     </button>
 
 
@@ -83,13 +93,13 @@
                         class="search-button"
                         aria-label="Buscar"
                     >
-
                         <i class="fa-solid fa-magnifying-glass"></i>
-
                     </button>
 
                 </div>
 
+
+                <!-- Logo -->
 
                 <a
                     href="../index.html"
@@ -100,6 +110,8 @@
                 </a>
 
 
+                <!-- Navegación derecha -->
+
                 <div class="nav-right">
 
                     <button
@@ -107,34 +119,34 @@
                         class="favorites-button"
                         aria-label="Favoritos"
                     >
-
                         <i class="fa-regular fa-heart"></i>
-
                     </button>
-                    
-                <a
-                    href="./carrito.html"
-                    class="cart-button"
-                    aria-label="Carrito"
-                    >
-                    <i class="fa-solid fa-cart-shopping"></i>
-                </a>
-                </div>
 
+
+                    <button
+                        type="button"
+                        aria-label="Carrito"
+                    >
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </button>
+
+                </div>
 
             </div>
 
 
-            <nav
+            <!-- Menú mobile -->
+
+            <div
                 class="mobile-nav"
-                id="mobile-navigation"
+                id="mobile-nav"
             >
 
-                <ul class="mobile-nav-items-container-ul">
+                <ul class="mobile-nav-list">
 
                     <li>
                         <a href="../index.html">
-                            HOME
+                            INICIO
                         </a>
                     </li>
 
@@ -145,20 +157,20 @@
                     </li>
 
                     <li>
-                        <a href="./nosotros.html">
+                        <a href="./pages/nosotros.html">
                             NOSOTROS
                         </a>
                     </li>
 
                     <li>
-                        <a href="./contacto.html">
+                        <a href="./pages/contacto.html">
                             CONTACTO
                         </a>
                     </li>
 
                 </ul>
 
-            </nav>
+            </div>
 
         </nav>
 
@@ -169,38 +181,204 @@
 
     <main>
 
-        <section
-            class="collection"
-            aria-labelledby="collection-title"
-        >
+        <div class="collection-header">
 
-            <div class="container">
+    <h1 id="collection-title">
+        NUESTRA COLECCIÓN
+    </h1>
 
-                <h1 id="collection-title">
-                    COLECCIÓN
-                </h1>
+</div>
 
 
-                <section class="products-section">
+<!-- ================= CATEGORÍAS ================= -->
 
-                    <div class="products-grid" id="products-grid">
-                        <!-- Los productos se cargarán desde Google Sheets -->
-                    </div>
-                </section>
-                    
+<nav
+    class="collection-categories"
+    aria-label="Categorías de productos"
+    id="collection-categories"
+>
+    <!-- Las categorías se generan automáticamente desde Google Sheets -->
+</nav>
 
-            </div>
 
-        </section>
+<!-- ================= RESULTADOS ================= -->
+
+<div class="collection-toolbar">
+
+    <p
+        class="collection-results"
+        id="collection-results"
+    ></p>
+
+</div>
+
+
+<!-- ================= PRODUCTOS ================= -->
+
+<section
+    class="products-section"
+    aria-label="Productos"
+>
+
+    <div
+        class="products-grid"
+        id="products-grid"
+    >
+        <!-- Los productos se cargarán desde Google Sheets -->
+    </div>
+
+</section>
+
+
+<!-- ================= PAGINACIÓN ================= -->
+
+<nav
+    class="collection-pagination"
+    id="collection-pagination"
+    aria-label="Páginas de productos"
+>
+</nav>
 
     </main>
 
 
-    <!-- ================= SCRIPTS ================= -->
+        <!-- =====================================================
+    FOOTER
+    ====================================================== -->
 
+    <footer class="footer">
+
+        <div class="footer-content">
+
+
+            <!-- Marca -->
+
+            <div class="footer-brand">
+
+                <h2>
+                    RUFFIANA
+                </h2>
+
+            </div>
+
+
+            <!-- Menú -->
+
+            <nav
+                class="footer-links"
+                aria-label="Menú del footer"
+            >
+
+                <h3>
+                    MENÚ
+                </h3>
+
+                <a href="./index.html">
+                    Inicio
+                </a>
+
+                <a href="./pages/coleccion.html">
+                    Colección
+                </a>
+
+                <a href="./pages/nosotros.html">
+                    Nosotros
+                </a>
+
+                <a href="./pages/contacto.html">
+                    Contacto
+                </a>
+
+            </nav>
+
+
+            <!-- Información -->
+
+            <nav
+                class="footer-links"
+                aria-label="Información"
+            >
+
+                <h3>
+                    INFORMACIÓN
+                </h3>
+
+                <a href="./talles.html">
+                    Talles
+                </a>
+
+                <a href="./metodos-de-pago.html">
+                    Métodos de Pago
+                </a>
+
+                <a href="./formas-de-envio.html">
+                    Formas de Envío
+                </a>
+
+                <a href="./preguntas-frecuentes.html">
+                    Preguntas Frecuentes
+                </a>
+
+            </nav>
+
+
+            <!-- Contacto -->
+
+            <div class="footer-contact">
+
+                <h3>
+                    CONTACTO
+                </h3>
+
+                <a href="https://wa.me/1234567890">
+                    WhatsApp
+                </a>
+
+                <a
+                    href="https://www.tiktok.com/@ruffianaboutique"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    TikTok
+                </a>
+
+                <a
+                    href="https://www.instagram.com/ruffiana.boutique/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Instagram
+                </a>
+
+                <a href="mailto:ruffianafemme@gmail.com">
+                    ruffianafemme@gmail.com
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- Copyright -->
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 RUFFIANA. Todos los derechos reservados.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- ================= SCRIPTS ================= -->
     <script src="../js/menu.js"></script>
     <script src="../js/cart.js"></script>
+    <script src="../js/buscador.js"></script>
     <script src="../js/productos.js"></script>
+    <script src="../js/coleccion.js"></script>
 
 </body>
 

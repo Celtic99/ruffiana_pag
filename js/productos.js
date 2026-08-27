@@ -28,7 +28,7 @@ const productsGrid =
    3. PRODUCTOS
 ========================================================= */
 
-let products = [];
+window.products = [];
 
 
 /* =========================================================
@@ -520,12 +520,7 @@ function mostrarProductos(productos) {
 
         }
 
-
-        /* =================================================
-           BOTÓN
-           Conservamos .add-to-cart porque tu CSS
-           ya está preparado para esta clase.
-        ================================================= */
+        window.mostrarProductos = mostrarProductos;
 
         let botonHTML;
 
@@ -759,50 +754,47 @@ async function cargarProductosDesdeGoogle() {
         /* =================================================
            PREPARAR PRODUCTOS
         ================================================= */
-
-        products =
+        window.products =
             prepararProductos(
                 datos
             );
-
-
+        
+        
         console.log(
             "PRODUCTOS AGRUPADOS:"
         );
 
 
         console.table(
-            products
+            window.products
         );
-
 
         /* =================================================
            MOSTRAR
         ================================================= */
 
-        mostrarProductos(
-            products
-        );
-
+mostrarProductos(
+    window.products
+);
 
         /* =================================================
            DEBUG DE VARIANTES
         ================================================= */
 
-        products.forEach(
-            producto => {
+    window.products.forEach(
+        producto => {
 
-                console.log(
-                    `PRODUCTO: ${producto.name}`
-                );
+            console.log(
+                `PRODUCTO: ${producto.name}`
+            );
 
 
-                console.table(
-                    producto.variants
-                );
+            console.table(
+                producto.variants
+            );
 
-            }
-        );
+        }
+    );
 
 
     } catch (error) {
@@ -816,9 +808,185 @@ async function cargarProductosDesdeGoogle() {
 
 }
 
-
 /* =========================================================
    11. INICIAR
 ========================================================= */
 
-cargarProductosDesdeGoogle();
+async function iniciarProductos() {
+
+    await cargarProductosDesdeGoogle();
+
+
+    /* =====================================================
+       BUSCAR PRODUCTOS SI VIENE UNA BÚSQUEDA
+    ===================================================== */
+
+    const busqueda =
+        sessionStorage.getItem(
+            "ruffianaBusqueda"
+        );
+
+
+    if (!busqueda) {
+
+        return;
+
+    }
+
+
+    const texto =
+        busqueda
+            .trim()
+            .toLowerCase();
+
+
+    if (!texto) {
+
+        sessionStorage.removeItem(
+            "ruffianaBusqueda"
+        );
+
+        return;
+
+    }
+
+
+    /* =====================================================
+       FILTRAR
+    ===================================================== */
+
+    const resultados =
+        window.products.filter(
+            producto => {
+
+
+                /* ==============================
+                   NOMBRE
+                ============================== */
+
+                const nombre =
+                    String(
+                        producto.name || ""
+                    ).toLowerCase();
+
+
+                /* ==============================
+                   CATEGORÍA
+                ============================== */
+
+                const categoria =
+                    String(
+                        producto.category || ""
+                    ).toLowerCase();
+
+
+                /* ==============================
+                   DESCRIPCIÓN
+                ============================== */
+
+                const descripcion =
+                    String(
+                        producto.description || ""
+                    ).toLowerCase();
+
+
+                /* ==============================
+                   VARIANTES
+                ============================== */
+
+                const variantes =
+                    producto.variants || [];
+
+
+                const coincideVariante =
+                    variantes.some(
+                        variante => {
+
+                            const color =
+                                String(
+                                    variante.color || ""
+                                ).toLowerCase();
+
+
+                            const talle =
+                                String(
+                                    variante.size || ""
+                                ).toLowerCase();
+
+
+                            return (
+
+                                color.includes(
+                                    texto
+                                )
+
+                                ||
+
+                                talle.includes(
+                                    texto
+                                )
+
+                            );
+
+                        }
+                    );
+
+
+                /* ==============================
+                   RESULTADO
+                ============================== */
+
+                return (
+
+                    nombre.includes(
+                        texto
+                    )
+
+                    ||
+
+                    categoria.includes(
+                        texto
+                    )
+
+                    ||
+
+                    descripcion.includes(
+                        texto
+                    )
+
+                    ||
+
+                    coincideVariante
+
+                );
+
+            }
+        );
+
+
+    /* =====================================================
+       MOSTRAR RESULTADOS
+    ===================================================== */
+
+    mostrarProductos(
+        resultados
+    );
+
+
+    /* =====================================================
+       BORRAR BÚSQUEDA
+       Para que no quede guardada para siempre.
+    ===================================================== */
+
+    sessionStorage.removeItem(
+        "ruffianaBusqueda"
+    );
+
+}
+
+
+/* =========================================================
+   EJECUTAR
+========================================================= */
+
+iniciarProductos();
