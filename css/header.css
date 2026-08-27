@@ -1,0 +1,266 @@
+/* =========================================================
+header, barra de anuncio y navegación
+========================================================= */
+
+
+/* =========================================================
+HEADER
+========================================================= */
+
+.header {
+    width: 100%;
+    background-color: var(--color-white);
+}
+
+
+/* =========================================================
+BARRA DE ANUNCIO
+========================================================= */
+
+.adbar {
+    width: 100%;
+    padding: 8px 20px;
+
+    background-color: var(--color-dark);
+    color: var(--color-white);
+
+    text-align: center;
+    overflow: hidden;
+}
+
+.adbar p {
+
+    margin:0;
+
+    padding-left:100%;
+
+    white-space:nowrap;
+
+    font-family:var(--title-font);
+
+    font-size:.75rem;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    animation:marquee 30s linear infinite;
+}
+
+@keyframes marquee{
+
+    from{
+
+        transform:translateX(0);
+
+    }
+
+
+    to{
+
+        transform:translateX(-100%);
+
+    }
+
+}
+
+/* =========================================================
+NAVBAR
+========================================================= */
+
+.navbar {
+    width: 100%;
+    background-color: var(--color-navbar);
+}
+
+
+/* Contenedor principal */
+
+.nav-items-container {
+    width: min(90%, var(--max-width));
+    height: 70px;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+/* =========================================================
+NAV LEFT / NAV RIGHT
+========================================================= */
+
+.nav-left,
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+
+/* =========================================================
+BOTONES DEL NAV
+========================================================= */
+
+.nav-left button,
+.nav-right button {
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    background: transparent;
+
+    color: var(--color-white);
+
+    font-size: 18px;
+
+    transition: var(--transition);
+}
+
+
+/* Hover */
+
+.nav-left button:hover,
+.nav-right button:hover {
+    opacity: 0.7;
+}
+
+
+/* =========================================================
+LOGO
+========================================================= */
+
+.nav-logo {
+    color: var(--color-white);
+
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 2px;
+
+    transition: var(--transition);
+}
+
+
+.nav-logo:hover {
+    opacity: 0.8;
+}
+
+
+/* =========================================================
+MENU CELULAR
+========================================================= */
+
+.mobile-nav {
+    display: none;
+
+    width: 100%;
+
+    background-color: var(--color-navbar);
+}
+
+
+.mobile-nav-list {
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px;
+    gap: 20px;
+
+    text-align: center;
+}
+
+
+.mobile-nav-list a {
+    color: var(--color-white);
+
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+
+    transition: var(--transition);
+}
+
+
+.mobile-nav-list a:hover {
+    opacity: 0.7;
+}
+
+
+/* =========================================================
+ESTADO ABIERTO DEL MENÚ
+========================================================= */
+
+.mobile-nav.active {
+    display: block;
+}
+
+
+/* =========================================================
+   CART
+========================================================= */
+
+.cart-button {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: var(--color-white);
+
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+
+.cart-button i {
+    font-size: 1.1rem;
+
+    transition: color 0.3s ease;
+}
+
+
+.cart-button:hover i {
+    color: var(--color-accent);
+}
+
+
+/* Contador */
+
+.cart-count-badge {
+
+    position: absolute;
+
+    top: -9px;
+    right: -10px;
+
+    min-width: 18px;
+    height: 18px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 2px 5px;
+
+    border-radius: 50%;
+
+    background-color: var(--color-accent);
+
+    color: var(--color-white);
+
+    font-family: var(--title-font);
+
+    font-size: 0.65rem;
+
+    line-height: 1;
+
+}

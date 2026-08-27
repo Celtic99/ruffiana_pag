@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Carrito | RUFFIANA</title>
+
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+    
+    <link
+        rel="stylesheet"
+        href="../css/header.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/products.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/cart.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/responsive.css"
+    >
+
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+HEADER
+===================================================== -->
+
+<header class="header">
+
+
+    <!-- Barra de anuncio -->
+
+    <section class="adbar">
+
+        <p>
+            10% OFF EN TRANSFERENCIA //
+            ENVÍO GRATIS A TODO EL PAÍS EN COMPRAS SUPERIORES A $120.000
+        </p>
+
+    </section>
+
+
+    <!-- Navbar -->
+
+    <nav class="navbar">
+
+        <div class="nav-items-container">
+
+
+            <!-- Izquierda -->
+
+            <div class="nav-left">
+
+                <button
+                    type="button"
+                    id="hamburger-icon"
+                    aria-label="Abrir menú"
+                    aria-expanded="false"
+                    aria-controls="mobile-navigation"
+                >
+
+                    <i class="fa-solid fa-bars"></i>
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="search-button"
+                    aria-label="Buscar"
+                >
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                </button>
+
+            </div>
+
+
+            <!-- Logo -->
+
+            <a
+                href="../index.html"
+                class="nav-logo"
+                aria-label="RUFFIANA - Inicio"
+            >
+                RUFFIANA
+            </a>
+
+
+            <!-- Derecha -->
+
+            <div class="nav-right">
+
+                <button
+                    type="button"
+                    class="favorites-button"
+                    aria-label="Favoritos"
+                >
+
+                    <i class="fa-regular fa-heart"></i>
+
+                </button>
+
+
+                <a
+                    href="./carrito.html"
+                    class="cart-button"
+                    aria-label="Carrito"
+                >
+
+                    <i class="fa-solid fa-cart-shopping"></i>
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- Menú mobile -->
+
+        <nav
+            class="mobile-nav"
+            id="mobile-navigation"
+        >
+
+            <ul class="mobile-nav-items-container-ul">
+
+                <li>
+                    <a href="../index.html">
+                        HOME
+                    </a>
+                </li>
+
+                <li>
+                    <a href="./coleccion.html">
+                        COLECCIÓN
+                    </a>
+                </li>
+
+                <li>
+                    <a href="./nosotros.html">
+                        NOSOTROS
+                    </a>
+                </li>
+
+                <li>
+                    <a href="./contacto.html">
+                        CONTACTO
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </nav>
+
+</header>
+
+
+<!-- =====================================================
+CARRITO
+===================================================== -->
+
+<main class="cart-page">
+
+
+    <header class="cart-header">
+
+        <h1>
+            MI CARRITO
+        </h1>
+
+        <p>
+            <a href="../index.html">
+                Inicio
+            </a>
+
+            <span>/</span>
+
+            Carrito
+        </p>
+
+        <span
+            id="cart-count"
+            class="cart-count"
+        >
+            0 productos
+        </span>
+
+    </header>
+
+
+    <!-- Productos -->
+
+    <section class="cart-products-section">
+
+        <ul
+            id="cart-products"
+            class="cart-products"
+        >
+        </ul>
+
+    </section>
+
+
+    <!-- Resumen -->
+
+    <section class="cart-summary">
+
+
+        <div class="cart-total">
+
+            <span>
+                Total
+            </span>
+
+            <strong id="cart-total">
+                $0
+            </strong>
+
+        </div>
+
+
+        <a
+            href="./checkout.html"
+            class="checkout-button"
+        >
+            FINALIZAR COMPRA
+        </a>
+
+
+        <a
+            href="./coleccion.html"
+            class="continue-shopping"
+        >
+
+            Seguir comprando
+
+        </a>
+
+
+    </section>
+
+
+</main>
+
+
+
+
+<!-- =====================================================
+SCRIPTS
+===================================================== -->
+
+<script src="../js/menu.js"></script>
+
+<script src="../js/cart.js"></script>
+
+
+</body>
+
+</html>

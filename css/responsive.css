@@ -1,0 +1,299 @@
+/* =========================================================
+responsive
+========================================================= */
+
+
+/* =========================================================
+TABLET
+========================================================= */
+
+/* =========================================================
+   TABLET
+   Hasta 900px
+========================================================= */
+
+@media (max-width: 900px) {
+
+
+    /* =====================================================
+    HEADER
+    ===================================================== */
+
+    .nav-items-container {
+        width: 92%;
+    }
+
+
+    /* =====================================================
+    HERO
+    ===================================================== */
+
+    .hero {
+        margin-top: 120px;
+        margin-bottom: 140px;
+    }
+
+
+    .hero h1 {
+        font-size: clamp(70px, 12vw, 150px);
+    }
+
+
+    /* =====================================================
+    PRODUCTS
+    ===================================================== */
+
+    .products {
+        padding: 30px;
+    }
+
+
+    .products-grid {
+        grid-template-columns: repeat(3, 1fr);
+
+        gap: 15px;
+    }
+
+
+    .category {
+        height: 250px;
+    }
+
+
+    /* =====================================================
+    FOOTER
+    ===================================================== */
+
+    .footer {
+        padding: 50px 40px 25px;
+    }
+
+
+    .footer-content {
+        grid-template-columns: repeat(4, 1fr);
+
+        gap: 40px;
+    }
+
+}
+
+/* =========================================================
+CELULAR
+========================================================= */
+
+@media (max-width: 600px) {
+
+
+    /* =====================================================
+    HEADER
+    ===================================================== */
+
+
+    .nav-left .search-button,
+    .nav-right .favorites-button {
+        display: none;
+    }
+
+    .adbar {
+        padding: 7px 10px;
+    }
+
+
+    .adbar p {
+        font-size: 10px;
+        white-space: nowrap;
+    }
+
+
+    .nav-items-container {
+        height: 60px;
+    }
+
+
+    .nav-left,
+    .nav-right {
+        gap: 8px;
+    }
+
+
+    .nav-left button,
+    .nav-right button {
+        width: 35px;
+        height: 35px;
+
+        font-size: 16px;
+    }
+
+
+    .nav-logo {
+        font-size: 22px;
+        letter-spacing: 1.5px;
+    }
+
+
+    /* =====================================================
+    HERO
+    ===================================================== */
+
+    .hero {
+        margin-top: 90px;
+        margin-bottom: 100px;
+    }
+
+
+    .hero h1 {
+        font-size: clamp(55px, 18vw, 100px);
+        letter-spacing: 4px;
+    }
+
+
+    /* =====================================================
+    PRODUCTS
+    ===================================================== */
+
+    .products {
+        margin-top: 60px;
+        margin-bottom: 60px;
+
+        padding: 30px 20px;
+    }
+
+
+    .products-grid {
+        grid-template-columns: 1fr;
+
+        gap: 15px;
+    }
+
+
+    .category {
+    height: 300px;
+    }
+
+    .category-image {
+    background-size: contain;
+    background-color: var(--color-white);
+    }
+
+
+    /* =====================================================
+    FOOTER
+    ===================================================== */
+
+    .footer {
+        padding: 50px 25px 20px;
+    }
+
+
+    .footer-content {
+        grid-template-columns: 1fr;
+
+        gap: 35px;
+
+        text-align: center;
+    }
+
+
+    .footer-links,
+    .footer-contact {
+        align-items: center;
+    }
+
+
+    .footer-brand h2 {
+        font-size: 1.5rem;
+    }
+
+
+    .footer-bottom {
+        margin-top: 35px;
+    }
+
+}
+
+
+/* =========================================================
+CELULAR
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .nav-left .search-button,
+    .nav-right .favorites-button {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 55px;
+    }
+
+
+    .products {
+        padding: 25px 15px;
+    }
+
+
+    .category {
+        height: 220px;
+    }
+
+
+    .footer {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+}
+
+
+@media (max-width: 900px) {
+
+    .products-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 20px;
+
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .products-section {
+
+        width: 92%;
+
+        margin: 70px auto;
+
+    }
+
+
+    .products-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 15px;
+
+    }
+
+
+    .product-info h3 {
+
+        font-size: .7rem;
+
+    }
+
+
+    .add-to-cart {
+
+        width: 100%;
+
+        padding: 11px 8px;
+
+    }
+
+}

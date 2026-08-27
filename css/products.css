@@ -1,0 +1,306 @@
+/* =========================================================
+Categorias
+========================================================= */
+
+
+/* =========================================================
+SECCION PRODUCTS
+========================================================= */
+
+.products {
+    margin-top: 100px;
+    margin-bottom: 100px;
+
+    padding: 40px 60px;
+}
+
+
+/* =========================================================
+GRID DE CATEGORIAS
+========================================================= */
+
+.products-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+CATEGORIAS
+========================================================= */
+
+.category {
+    height: 300px;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+CATEGORIA SALE
+========================================================= */
+
+.category-sale {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+}
+
+
+.category-sale h5 {
+    margin: 0;
+
+    font-family: var(--title-font);
+}
+
+
+.category-sale h4 {
+    margin: 0;
+
+    font-family: var(--title-font);
+
+    color: var(--color-accent);
+}
+
+
+/* =========================================================
+IMAGENES DE CATEGORIAS
+========================================================= */
+
+/*Google Sheets.*/
+
+.category-image {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+
+/* sale off */
+
+.category-sale-off1 {
+    background-image: url("https://png.pngtree.com/png-clipart/20230921/original/pngtree-romantic-pink-sweater-christmas-watercolor-clipart-illustration-generative-ai-vector-png-image_12821641.png");
+}
+
+.category-sale-off2 {
+    background-image: url("https://i5.walmartimages.com/asr/dae6bc66-b092-45fe-bb6e-120f6f27cbd9.715e347dc05e9bb8a158ecd00c30dfcd.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF");
+}
+
+
+/* =========================================================
+MINI ZOOM
+========================================================= */
+
+.category-image:hover {
+    transform: scale(1.03);
+
+    /*
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.15);
+    */
+}
+
+
+/* =========================================================
+SEPARADOR
+========================================================= */
+
+.separator {
+    width: 90%;
+    height: 1px;
+
+    margin: 40px auto;
+
+    background-color: #d6d6d6;
+}
+
+
+/* =========================================================
+   PRODUCTOS
+========================================================= */
+
+.products-section {
+
+    width: 90%;
+
+    max-width: 1400px;
+
+    margin: 100px auto;
+
+}
+
+
+.products-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 25px;
+
+}
+
+
+/* TARJETA */
+
+.product-card {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+/* IMAGEN */
+
+.product-image {
+
+    width: 100%;
+
+    aspect-ratio: 3 / 4;
+
+    overflow: hidden;
+
+    background: #f5f5f5;
+
+}
+
+
+.product-image img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition:
+        transform .4s ease;
+
+}
+
+
+.product-card:hover
+.product-image img {
+
+    transform: scale(1.04);
+
+}
+
+
+/* INFORMACIÓN */
+
+.product-info {
+
+    padding-top: 15px;
+
+}
+
+
+.product-info h3 {
+
+    margin: 0 0 8px;
+
+    font-family:
+        var(--title-font);
+
+    font-size: .8rem;
+
+    font-weight: 500;
+
+    letter-spacing: 1px;
+
+}
+
+
+.product-price {
+
+    margin: 0 0 10px;
+
+    font-family:
+        var(--title-font);
+
+    font-size: .9rem;
+
+}
+
+
+.product-color,
+.product-size {
+
+    margin: 4px 0;
+
+    font-size: .8rem;
+
+    color: #777;
+
+}
+
+
+/* BOTÓN */
+
+.add-to-cart {
+
+    margin-top: 15px;
+
+    padding: 12px 15px;
+
+    border: none;
+
+    background:
+        var(--color-navbar);
+
+    color:
+        var(--color-white);
+
+    font-family:
+        var(--title-font);
+
+    font-size: .65rem;
+
+    letter-spacing: 1.5px;
+
+    cursor: pointer;
+
+    transition:
+        background .3s ease;
+
+}
+
+
+.add-to-cart:hover {
+
+    background:
+        var(--color-accent);
+
+}
+
+
+
+/* coleccion */
+
+.add-to-cart.disabled {
+    background-color: #d3d3d3;
+    border-color: #d3d3d3;
+    color: #777;
+    cursor: not-allowed;
+    opacity: 1;
+}
+
+.add-to-cart.disabled::after {
+    display: none;
+}

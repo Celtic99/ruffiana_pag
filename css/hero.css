@@ -1,0 +1,67 @@
+/* =========================================================
+portada
+========================================================= */
+
+
+/* =========================================================
+HERO
+========================================================= */
+
+.hero {
+    width: 100%;
+
+    margin-top: 160px;
+    margin-bottom: 180px;
+
+    background-repeat: no-repeat;
+    background-position: 80% center;
+    background-size: cover;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* =========================================================
+CONTENIDO DEL HERO
+========================================================= */
+
+.hero-text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+RUFFIANA
+========================================================= */
+
+.hero h1 {
+    margin: 0;
+
+    font-family: var(--title-font);
+
+    font-size: clamp(80px, 12vw, 220px);
+
+    line-height: 1;
+
+    text-transform: uppercase;
+
+    background: linear-gradient(
+        to right,
+        #6b5134,
+        #dbdfc5
+    );
+
+    background-clip: text;
+    -webkit-background-clip: text;
+
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}

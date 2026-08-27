@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Confirmar pedido | RUFFIANA</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    >
+
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/hero.css">
+    <link rel="stylesheet" href="../css/products.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/checkout.css">
+    <link rel="stylesheet" href="../css/confirmacion.css">
+
+
+</head>
+
+    <!-- =====================================================
+    HEADER
+    ====================================================== -->
+
+    <header class="header">
+
+
+        <!-- Barra de anuncio -->
+
+        <div class="adbar">
+
+            <p>
+                10% OFF EN TRANSFERENCIA //
+                ENVÍO GRATIS A TODO EL PAÍS EN COMPRAS
+                SUPERIORES A $120.000 //
+            </p>
+
+        </div>
+
+
+        <!-- Navegación -->
+
+        <nav class="navbar">
+
+            <div class="nav-items-container">
+
+
+                <!-- Navegación izquierda -->
+
+                <div class="nav-left">
+
+                    <button
+                        type="button"
+                        id="hamburger-icon"
+                        aria-label="Abrir menú"
+                        aria-expanded="false"
+                        aria-controls="mobile-navigation"
+                    >
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="search-button"
+                        aria-label="Buscar"
+                    >
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+
+                </div>
+
+
+                <!-- Logo -->
+
+                <a
+                    href="./index.html"
+                    class="nav-logo"
+                    aria-label="RUFFIANA - Inicio"
+                >
+                    RUFFIANA
+                </a>
+
+
+                <!-- Navegación derecha -->
+
+                <div class="nav-right">
+
+                    <button
+                        type="button"
+                        class="favorites-button"
+                        aria-label="Favoritos"
+                    >
+                        <i class="fa-regular fa-heart"></i>
+                    </button>
+
+
+                    <button
+                        type="button"
+                        aria-label="Carrito"
+                    >
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Menú mobile -->
+
+            <div
+                class="mobile-nav"
+                id="mobile-nav"
+            >
+
+                <ul class="mobile-nav-list">
+
+                    <li>
+                        <a href="./index.html">
+                            INICIO
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="./pages/coleccion.html">
+                            COLECCIÓN
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="./pages/nosotros.html">
+                            NOSOTROS
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="./pages/contacto.html">
+                            CONTACTO
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+<body>
+
+
+<main class="confirmation-page">
+
+
+    <section class="confirmation-container">
+
+
+        <h1>
+            RESUMEN DEL PEDIDO
+        </h1>
+
+
+        <p class="order-number">
+            Pedido <strong id="order-number"></strong>
+        </p>
+
+
+        <!-- ================= CLIENTE ================= -->
+
+        <section class="confirmation-section">
+
+            <h2>
+                DATOS DEL CLIENTE
+            </h2>
+
+            <p>
+                <strong>Nombre:</strong>
+                <span id="confirm-name"></span>
+            </p>
+
+            <p>
+                <strong>WhatsApp:</strong>
+                <span id="confirm-phone"></span>
+            </p>
+
+            <p>
+                <strong>Email:</strong>
+                <span id="confirm-email"></span>
+            </p>
+
+        </section>
+
+
+        <!-- ================= ENTREGA ================= -->
+
+        <section class="confirmation-section">
+
+            <h2>
+                ENTREGA
+            </h2>
+
+            <p>
+                <strong>Forma de entrega:</strong>
+                <span id="confirm-shipping"></span>
+            </p>
+
+            <div id="confirm-address"></div>
+
+        </section>
+
+
+        <!-- ================= PRODUCTOS ================= -->
+
+        <section class="confirmation-section">
+
+            <h2>
+                PRODUCTOS
+            </h2>
+
+            <div id="confirm-products"></div>
+
+        </section>
+
+
+        <!-- ================= TOTAL ================= -->
+
+        <section class="confirmation-total">
+
+            <span>
+                TOTAL
+            </span>
+
+            <strong id="confirm-total">
+                $0
+            </strong>
+
+        </section>
+
+
+        <div class="confirmation-actions">
+
+            <button
+                type="button"
+                id="confirm-order-button"
+                class="checkout-button"
+            >
+                CONFIRMAR PEDIDO
+            </button>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+<!-- ================= SCRIPTS ================= -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script src="../js/confirmacion.js"></script>
+
+</body>
+
+</html>

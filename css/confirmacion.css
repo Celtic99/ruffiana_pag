@@ -1,0 +1,208 @@
+/* =========================================================
+   CONFIRMACIÓN
+========================================================= */
+
+
+.confirmation-page {
+
+    width: 90%;
+
+    max-width: 800px;
+
+    margin: 80px auto;
+
+}
+
+
+.confirmation-container {
+
+    width: 100%;
+
+}
+
+
+.confirmation-container h1 {
+
+    font-family: var(--title-font);
+
+    font-size: 1.5rem;
+
+    letter-spacing: 3px;
+
+    color: var(--color-dark);
+
+    margin-bottom: 10px;
+
+}
+
+
+.order-number {
+
+    color: #777;
+
+    margin-bottom: 50px;
+
+}
+
+
+.confirmation-section {
+
+    padding: 25px 0;
+
+    border-bottom: 1px solid #ddd;
+
+}
+
+
+.confirmation-section h2 {
+
+    font-family: var(--title-font);
+
+    font-size: .8rem;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 20px;
+
+    color: var(--color-dark);
+
+}
+
+
+.confirmation-section p {
+
+    margin: 8px 0;
+
+    font-size: .9rem;
+
+}
+
+
+.confirmation-section strong {
+
+    font-weight: 600;
+
+}
+
+
+.confirmation-total {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 30px 0;
+
+    font-family: var(--title-font);
+
+    letter-spacing: 2px;
+
+}
+
+
+.confirmation-total strong {
+
+    font-size: 1.3rem;
+
+}
+
+
+.confirmation-actions {
+
+    margin-top: 20px;
+
+    text-align: right;
+
+}
+
+
+.confirmation-actions button {
+
+    border: none;
+
+}
+
+
+.confirmation-product {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 15px 0;
+
+    border-bottom: 1px solid #eee;
+
+}
+
+
+.confirmation-product-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+}
+
+
+.confirmation-product-name {
+
+    font-weight: 600;
+
+}
+
+
+.confirmation-product-details {
+
+    color: #777;
+
+    font-size: .85rem;
+
+}
+
+
+.confirmation-product-price {
+
+    white-space: nowrap;
+
+}
+
+
+@media (max-width: 600px) {
+
+    .confirmation-page {
+
+        margin: 50px auto;
+
+    }
+
+
+    .confirmation-container h1 {
+
+        font-size: 1.2rem;
+
+    }
+
+
+    .confirmation-product {
+
+        flex-direction: column;
+
+        gap: 8px;
+
+    }
+
+
+    .confirmation-actions button {
+
+        width: 100%;
+
+    }
+
+}

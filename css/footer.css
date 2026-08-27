@@ -1,0 +1,157 @@
+/* =========================================================
+footer
+========================================================= */
+
+
+/* =========================================================
+FOOTER
+========================================================= */
+
+.footer {
+    background-color: var(--color-navbar);
+
+    padding: 60px 80px 25px;
+
+    color: #f3ede8;
+}
+
+
+/* =========================================================
+CONTENIDO
+========================================================= */
+
+.footer-content {
+    display: grid;
+
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+
+    gap: 50px;
+}
+
+
+/* =========================================================
+RUFFIANA
+========================================================= */
+
+.footer-brand h2 {
+    margin: 0 0 20px;
+
+    color: #3b2c1d;
+
+    font-family: var(--title-font);
+
+    font-size: 1.8rem;
+
+    letter-spacing: 4px;
+}
+
+
+/* =========================================================
+TÍTULOS DE SECCIONES
+========================================================= */
+
+.footer-links h3,
+.footer-contact h3 {
+    margin: 0 0 20px;
+
+    color: #3b2c1d;
+
+    font-family: var(--title-font);
+
+    font-size: 0.8rem;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================================================
+PÁRRAFOS
+========================================================= */
+
+.footer p {
+    margin: 0;
+
+    font-size: 0.85rem;
+
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+LINKS
+========================================================= */
+
+.footer-links {
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.footer-links a {
+    margin-bottom: 12px;
+
+    color: #dbdad9;
+
+    font-size: 0.85rem;
+
+    text-decoration: none;
+
+    transition: var(--transition);
+}
+
+
+.footer-links a:hover {
+    color: var(--color-accent);
+}
+
+
+/* =========================================================
+CONTACTO
+========================================================= */
+
+.footer-contact {
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.footer-contact a {
+    margin-bottom: 12px;
+
+    color: #dbdad9;
+
+    font-size: 0.85rem;
+
+    text-decoration: none;
+
+    transition: var(--transition);
+}
+
+
+.footer-contact a:hover {
+    color: var(--color-accent);
+}
+
+
+/* =========================================================
+PARTE INFERIOR
+========================================================= */
+
+.footer-bottom {
+    margin-top: 50px;
+
+    padding-top: 20px;
+
+    border-top: 1px solid rgba(233, 227, 227, 0.15);
+
+    text-align: center;
+}
+
+
+.footer-bottom p {
+    font-size: 0.7rem;
+
+    letter-spacing: 1px;
+}

@@ -1,0 +1,143 @@
+/* =========================================================
+   CHECKOUT
+========================================================= */
+
+.checkout-form {
+
+    width: 90%;
+
+    max-width: 700px;
+
+    margin: 80px auto;
+
+}
+
+
+.checkout-form h2 {
+
+    margin-bottom: 35px;
+
+    font-family: var(--title-font);
+
+    font-size: 1.3rem;
+
+    letter-spacing: 2px;
+
+    color: var(--color-dark);
+
+}
+
+
+#checkout-form {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 22px;
+
+}
+
+
+.form-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+}
+
+
+.form-group label {
+
+    font-family: var(--title-font);
+
+    font-size: .75rem;
+
+    letter-spacing: 1px;
+
+    text-transform: uppercase;
+
+    color: var(--color-dark);
+
+}
+
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+
+    width: 100%;
+
+    padding: 14px 16px;
+
+    border: 1px solid #d8d1cb;
+
+    background: var(--color-white);
+
+    font-family: inherit;
+
+    font-size: .9rem;
+
+    outline: none;
+
+    transition: border-color .3s ease;
+
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+
+    border-color: var(--color-accent);
+
+}
+
+
+.form-group textarea {
+
+    min-height: 100px;
+
+    resize: vertical;
+
+}
+
+
+.checkout-button {
+
+    margin-top: 15px;
+
+    padding: 16px 30px;
+
+    border: none;
+
+    background: var(--color-navbar);
+
+    color: var(--color-white);
+
+    font-family: var(--title-font);
+
+    font-size: .75rem;
+
+    letter-spacing: 2px;
+
+    cursor: pointer;
+
+    transition: background .3s ease;
+
+}
+
+
+.checkout-button:hover {
+
+    background: var(--color-accent);
+
+}
+
+#shipping-fields {
+    flex-direction: column;
+    gap: 22px;
+}

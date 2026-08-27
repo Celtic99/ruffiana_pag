@@ -1,0 +1,378 @@
+/* =========================================================
+   RUFFIANA — CART.CSS
+   Página del carrito
+========================================================= */
+
+
+/* =========================================================
+   1. PÁGINA
+========================================================= */
+
+.cart-page {
+    width: min(90%, var(--max-width));
+
+    margin: 120px auto 80px;
+}
+
+
+/* =========================================================
+   2. HEADER DEL CARRITO
+========================================================= */
+
+.cart-header {
+    position: relative;
+
+    margin-bottom: 40px;
+
+    padding-bottom: 25px;
+
+    border-bottom: 1px solid #ddd;
+}
+
+
+.cart-header h1 {
+    margin: 0 0 10px;
+
+    font-family: var(--title-font);
+
+    font-size: 2rem;
+
+    letter-spacing: 2px;
+}
+
+
+.cart-header p {
+    margin: 0;
+
+    color: #7d7d7d;
+
+    font-size: 0.9rem;
+}
+
+
+.cart-header p a {
+    color: var(--color-dark);
+
+    text-decoration: none;
+}
+
+
+.cart-header p span {
+    margin: 0 8px;
+}
+
+
+.cart-count {
+    position: absolute;
+
+    right: 0;
+    bottom: 25px;
+
+    color: #7d7d7d;
+
+    font-size: 0.85rem;
+}
+
+
+/* =========================================================
+   3. LISTA
+========================================================= */
+
+.cart-products {
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+
+.cart-product {
+    display: grid;
+
+    grid-template-columns: 140px 1fr 180px;
+
+    align-items: center;
+
+    gap: 25px;
+
+    padding: 20px 0;
+
+    border-bottom: 1px solid #ddd;
+}
+
+
+/* =========================================================
+   4. IMAGEN
+========================================================= */
+
+.cart-product-image {
+    width: 140px;
+    height: 170px;
+
+    overflow: hidden;
+}
+
+
+.cart-product-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+/* =========================================================
+   5. INFORMACIÓN
+========================================================= */
+
+.cart-product-info h2 {
+    margin: 0 0 10px;
+
+    font-family: var(--title-font);
+
+    font-size: 1.1rem;
+
+    font-weight: 600;
+}
+
+
+.cart-product-info p {
+    margin: 5px 0;
+
+    color: #7d7d7d;
+
+    font-size: 0.9rem;
+}
+
+
+.cart-product-price {
+    margin-top: 15px !important;
+
+    color: var(--color-dark) !important;
+
+    font-size: 1.2rem !important;
+}
+
+
+/* =========================================================
+   6. CONTROLES
+========================================================= */
+
+.cart-product-actions {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 20px;
+}
+
+
+.quantity-control {
+    display: flex;
+
+    align-items: center;
+
+    border: 1px solid #ddd;
+}
+
+
+.quantity-control button {
+    width: 38px;
+    height: 38px;
+
+    border: none;
+
+    background: transparent;
+
+    color: var(--color-dark);
+
+    font-size: 1.1rem;
+
+    cursor: pointer;
+}
+
+
+.quantity-control button:hover {
+    color: var(--color-accent);
+
+    background: transparent;
+}
+
+
+.quantity-control span {
+    min-width: 35px;
+
+    text-align: center;
+
+    font-size: 0.9rem;
+}
+
+
+/* =========================================================
+   7. ELIMINAR
+========================================================= */
+
+.remove-product {
+    width: 35px;
+    height: 35px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #888;
+
+    cursor: pointer;
+
+    font-size: 1rem;
+}
+
+
+.remove-product:hover {
+    color: var(--color-accent);
+
+    background: transparent;
+}
+
+
+/* =========================================================
+   8. RESUMEN
+========================================================= */
+
+.cart-summary {
+    width: 100%;
+
+    margin-top: 40px;
+
+    text-align: right;
+}
+
+
+.cart-total {
+    display: flex;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    gap: 40px;
+
+    margin-bottom: 25px;
+}
+
+
+.cart-total span {
+    color: #7d7d7d;
+
+    font-size: 1rem;
+}
+
+
+.cart-total strong {
+    font-family: var(--title-font);
+
+    font-size: 1.5rem;
+}
+
+
+/* =========================================================
+   9. CHECKOUT
+========================================================= */
+
+.checkout-button {
+    padding: 14px 30px;
+
+    border: none;
+
+    background-color: var(--color-navbar);
+
+    color: var(--color-white);
+
+    font-family: var(--title-font);
+
+    font-size: 0.85rem;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+
+.checkout-button:hover {
+    background-color: var(--color-accent);
+}
+
+
+/* =========================================================
+   10. SEGUIR COMPRANDO
+========================================================= */
+
+.continue-shopping {
+    display: block;
+
+    margin-top: 20px;
+
+    color: #7d7d7d;
+
+    font-size: 0.85rem;
+
+    text-decoration: none;
+}
+
+
+.continue-shopping:hover {
+    color: var(--color-accent);
+}
+
+
+/* =========================================================
+   11. CARRITO VACÍO
+========================================================= */
+
+.empty-cart {
+    padding: 80px 20px;
+
+    text-align: center;
+}
+
+
+.empty-cart h2 {
+    margin-bottom: 20px;
+
+    font-family: var(--title-font);
+}
+
+/* cart button */
+
+.cart-button {
+    color: var(--color-dark);
+
+    text-decoration: none;
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+
+.cart-button i {
+    color: var(--color-dark);
+
+    font-size: 1.1rem;
+
+    transition: color 0.3s ease;
+}
+
+
+.cart-button:hover i {
+    color: var(--color-accent);
+}

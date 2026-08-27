@@ -1,0 +1,143 @@
+/* =========================================================
+estilos generales
+========================================================= */
+
+
+/* =========================================================
+VARIABLES
+========================================================= */
+
+:root {
+    /* colores */
+    --color-accent: #b18c68;
+    --color-dark: #212121;
+    --color-white: #ffffff;
+    --color-navbar: #866b50;
+    
+    /* tipografia */
+    --title-font: 'Montserrat', sans-serif;
+
+     /* layout */
+    --max-width: 1200px;
+
+    /* transiciones */
+    --transition: 0.3s ease;
+}
+
+
+/* =========================
+RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    font-family: var(--title-font);
+    color: var(--color-dark);
+    background-color: var(--color-white);
+    line-height: 1.5;
+}
+
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+
+button {
+    cursor: pointer;
+}
+
+
+ul {
+    list-style: none;
+}
+
+
+/* =========================
+CONTAINER
+========================= */
+
+.container {
+    width: min(90%, var(--max-width));
+    margin: 0 auto;
+}
+
+
+/* =========================
+TIPOGRAFÍA
+========================= */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--title-font);
+    line-height: 1.2;
+}
+
+
+p {
+    line-height: 1.5;
+}
+
+
+/* =========================
+UTILIDADES
+========================= */
+
+.text-center {
+    text-align: center;
+}
+
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+
+/* =========================
+SEPARADOR
+========================= */
+
+.separator {
+    width: 100%;
+    height: 1px;
+    background-color: #e5e5e5;
+}
+
