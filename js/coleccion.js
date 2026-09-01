@@ -63,7 +63,7 @@ function esperarProductos() {
 
 
 /* =====================================================
-   INICIAR
+INICIAR
 ===================================================== */
 
 function iniciarColeccion() {
@@ -74,38 +74,10 @@ function iniciarColeccion() {
 
     crearCategorias();
 
-
-    /* =================================================
-       BUSCADOR DESDE URL
-    ================================================= */
-
-    const parametros =
-        new URLSearchParams(
-            window.location.search
-        );
-
-
-    const busqueda =
-        parametros.get("buscar");
-
-
-    if (busqueda) {
-
-        aplicarBusqueda(
-            busqueda
-        );
-
-    } else {
-
-        mostrarPagina();
-
-    }
-
 }
 
-
 /* =====================================================
-   CREAR CATEGORÍAS
+CREAR CATEGORÍAS
 ===================================================== */
 
 function crearCategorias() {
@@ -156,7 +128,7 @@ function crearCategorias() {
 
 
     /* =================================================
-       TODOS
+    TODOS
     ================================================= */
 
     const botonTodos =
@@ -177,7 +149,7 @@ function crearCategorias() {
 
 
     /* =================================================
-       CATEGORÍAS
+    CATEGORÍAS
     ================================================= */
 
     categoriasOrdenadas.forEach(
@@ -201,7 +173,7 @@ function crearCategorias() {
 
 
 /* =====================================================
-   BOTÓN DE CATEGORÍA
+BOTÓN DE CATEGORÍA
 ===================================================== */
 
 function crearBotonCategoria(
@@ -244,7 +216,7 @@ function crearBotonCategoria(
 
 
 /* =====================================================
-   SELECCIONAR CATEGORÍA
+SELECCIONAR CATEGORÍA
 ===================================================== */
 
 function seleccionarCategoria(
@@ -261,7 +233,7 @@ function seleccionarCategoria(
 
 
     /* ================================================
-       Actualizar botones
+    Actualizar botones
     ================================================= */
 
     document
@@ -285,7 +257,7 @@ function seleccionarCategoria(
 
 
     /* ================================================
-       Filtrar
+    Filtrar
     ================================================= */
 
     if (
@@ -317,7 +289,7 @@ function seleccionarCategoria(
 
 
 /* =====================================================
-   BUSCAR
+BUSCAR
 ===================================================== */
 
 function aplicarBusqueda(
@@ -435,7 +407,7 @@ function aplicarBusqueda(
 
 
 /* =====================================================
-   ACTUALIZAR CATEGORÍAS
+ACTUALIZAR CATEGORÍAS
 ===================================================== */
 
 function actualizarCategorias() {
@@ -477,7 +449,7 @@ function actualizarCategorias() {
 
 
 /* =====================================================
-   MOSTRAR PÁGINA
+MOSTRAR PÁGINA
 ===================================================== */
 
 function mostrarPagina() {
@@ -525,7 +497,7 @@ function mostrarPagina() {
 
 
     /* =================================================
-       MOSTRAR PRODUCTOS
+    MOSTRAR PRODUCTOS
     ================================================= */
 
     if (
@@ -541,7 +513,7 @@ function mostrarPagina() {
 
 
     /* =================================================
-       RESULTADOS
+    RESULTADOS
     ================================================= */
 
     actualizarTextoResultados(
@@ -550,7 +522,7 @@ function mostrarPagina() {
 
 
     /* =================================================
-       PAGINACIÓN
+    PAGINACIÓN
     ================================================= */
 
     crearPaginacion(
@@ -561,7 +533,7 @@ function mostrarPagina() {
 
 
 /* =====================================================
-   TEXTO DE RESULTADOS
+TEXTO DE RESULTADOS
 ===================================================== */
 
 function actualizarTextoResultados(
@@ -586,7 +558,7 @@ function actualizarTextoResultados(
 
 
 /* =====================================================
-   PAGINACIÓN
+PAGINACIÓN
 ===================================================== */
 
 function crearPaginacion(
@@ -611,7 +583,7 @@ function crearPaginacion(
 
 
     /* =================================================
-       ANTERIOR
+    ANTERIOR
     ================================================= */
 
     const anterior =
@@ -647,7 +619,7 @@ function crearPaginacion(
 
 
     /* =================================================
-       NÚMEROS
+    NÚMEROS
     ================================================= */
 
     for (
@@ -698,7 +670,7 @@ function crearPaginacion(
 
 
     /* =================================================
-       SIGUIENTE
+    SIGUIENTE
     ================================================= */
 
     const siguiente =
@@ -736,7 +708,7 @@ function crearPaginacion(
 
 
 /* =====================================================
-   CREAR BOTÓN
+CREAR BOTÓN
 ===================================================== */
 
 function crearBotonPagina(
@@ -778,7 +750,7 @@ function crearBotonPagina(
 
 
 /* =====================================================
-   VOLVER ARRIBA
+VOLVER ARRIBA
 ===================================================== */
 
 function desplazarseArriba() {
@@ -803,10 +775,9 @@ function desplazarseArriba() {
 
 
 /* =====================================================
-   INICIAR
+INICIAR
 ===================================================== */
 
 esperarProductos();
-
 
 });

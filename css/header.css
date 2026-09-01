@@ -21,8 +21,8 @@ BARRA DE ANUNCIO
     width: 100%;
     padding: 8px 20px;
 
-    background-color: var(--color-dark);
-    color: var(--color-white);
+    background-color: var(--color-white);
+    color: var(--color-dark);
 
     text-align: center;
     overflow: hidden;
@@ -70,7 +70,8 @@ NAVBAR
 
 .navbar {
     width: 100%;
-    background-color: var(--color-navbar);
+    background-color: var(--color-backnav);
+
 }
 
 
@@ -115,7 +116,7 @@ BOTONES DEL NAV
     border: none;
     background: transparent;
 
-    color: var(--color-white);
+    color: var(--color-letter);
 
     font-size: 18px;
 
@@ -136,7 +137,7 @@ LOGO
 ========================================================= */
 
 .nav-logo {
-    color: var(--color-white);
+    color: var(--color-letter);
 
     font-size: 28px;
     font-weight: 700;
@@ -160,7 +161,7 @@ MENU CELULAR
 
     width: 100%;
 
-    background-color: var(--color-navbar);
+    background-color: #E9E5DB;
 }
 
 
@@ -176,7 +177,7 @@ MENU CELULAR
 
 
 .mobile-nav-list a {
-    color: var(--color-white);
+    color: var(--color-letter);
 
     font-size: 14px;
     font-weight: 600;
@@ -212,7 +213,7 @@ ESTADO ABIERTO DEL MENÚ
     align-items: center;
     justify-content: center;
 
-    color: var(--color-white);
+    color: var(--color-letter);
 
     text-decoration: none;
 
@@ -228,7 +229,7 @@ ESTADO ABIERTO DEL MENÚ
 
 
 .cart-button:hover i {
-    color: var(--color-accent);
+    opacity: 0.7;
 }
 
 
@@ -253,9 +254,9 @@ ESTADO ABIERTO DEL MENÚ
 
     border-radius: 50%;
 
-    background-color: var(--color-accent);
-
-    color: var(--color-white);
+    background-color: var(--color-white);
+    
+    color: #3b2c1d;
 
     font-family: var(--title-font);
 
@@ -353,7 +354,7 @@ ESTADO ABIERTO DEL MENÚ
 
     font-size: 13px;
 
-    color:#f0eeee;;
+    color:#1f1a1a;;
 
 }
 
@@ -362,7 +363,7 @@ ESTADO ABIERTO DEL MENÚ
 
 .ruffiana-search-input::placeholder {
 
-    color: #f0eeee;
+    color: #000000;
 
     letter-spacing:
         0.5px;
@@ -426,4 +427,9 @@ ESTADO ABIERTO DEL MENÚ
 
     pointer-events: none;
 
+}
+
+
+.home .nav-logo {
+    display: none;
 }

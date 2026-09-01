@@ -8,11 +8,11 @@ FOOTER
 ========================================================= */
 
 .footer {
-    background-color: var(--color-navbar);
+    background-color: var(--color-backnav);
 
     padding: 60px 80px 25px;
 
-    color: #f3ede8;
+    color: var(--color-letter);
 }
 
 
@@ -36,7 +36,7 @@ RUFFIANA
 .footer-brand h2 {
     margin: 0 0 20px;
 
-    color: #3b2c1d;
+    color: var(--color-letter);
 
     font-family: var(--title-font);
 
@@ -54,7 +54,7 @@ TÍTULOS DE SECCIONES
 .footer-contact h3 {
     margin: 0 0 20px;
 
-    color: #3b2c1d;
+    color: var(--color-letter);
 
     font-family: var(--title-font);
 
@@ -91,7 +91,7 @@ LINKS
 .footer-links a {
     margin-bottom: 12px;
 
-    color: #dbdad9;
+    color: var(--color-letter);
 
     font-size: 0.85rem;
 
@@ -120,7 +120,7 @@ CONTACTO
 .footer-contact a {
     margin-bottom: 12px;
 
-    color: #dbdad9;
+    color: var(--color-letter);
 
     font-size: 0.85rem;
 

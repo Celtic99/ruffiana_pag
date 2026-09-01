@@ -22,7 +22,9 @@ VARIABLES
     --color-accent: #b18c68;
     --color-dark: #212121;
     --color-white: #ffffff;
-    --color-navbar: #866b50;
+    --color-navbar: #3b2c1d;
+    --color-letter:#3b2c1d;
+    --color-backnav:#E3DED1;
     
     /* tipografia */
     --title-font: 'Montserrat', sans-serif;
@@ -150,4 +152,3 @@ SEPARADOR
     height: 1px;
     background-color: #e5e5e5;
 }
-
