@@ -1,0 +1,383 @@
+/* =========================================================
+   CONTACTO
+========================================================= */
+
+.contacto {
+    width: 100%;
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.contacto-hero {
+    padding: 90px 20px 80px;
+    text-align: center;
+    background-color: var(--color-white);
+}
+
+.contacto-hero-content {
+    width: min(90%, 700px);
+    margin: 0 auto;
+}
+
+.contacto-label {
+    display: block;
+    margin-bottom: 18px;
+    color: var(--color-accent);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.contacto-hero h1 {
+    margin-bottom: 25px;
+    color: var(--color-letter);
+    font-size: 2.5rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.contacto-hero p {
+    max-width: 600px;
+    margin: 0 auto;
+    color: var(--color-dark);
+    font-size: 0.95rem;
+    line-height: 1.9;
+}
+
+
+/* =========================================================
+   WHATSAPP
+========================================================= */
+
+.contacto-whatsapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 55px;
+    padding: 90px 20px;
+    background-color: var(--color-backnav);
+}
+
+.contacto-whatsapp-icon {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-accent);
+    border-radius: 50%;
+    color: var(--color-letter);
+    font-size: 3rem;
+    flex-shrink: 0;
+}
+
+.contacto-whatsapp-content {
+    width: min(90%, 600px);
+}
+
+.contacto-whatsapp-content h2 {
+    margin-bottom: 20px;
+    color: var(--color-letter);
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.contacto-whatsapp-content p {
+    margin-bottom: 30px;
+    color: var(--color-dark);
+    font-size: 0.9rem;
+    line-height: 1.9;
+}
+
+.contacto-whatsapp-button {
+    display: inline-block;
+    padding: 14px 28px;
+    background-color: var(--color-letter);
+    color: var(--color-white);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    transition: var(--transition);
+}
+
+.contacto-whatsapp-button:hover {
+    background-color: var(--color-accent);
+}
+
+
+/* =========================================================
+   CONSULTAS
+========================================================= */
+
+.contacto-consultas {
+    padding: 100px 20px;
+    background-color: var(--color-white);
+}
+
+.contacto-section-title {
+    margin-bottom: 55px;
+    text-align: center;
+}
+
+.contacto-section-title h2 {
+    color: var(--color-letter);
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.contacto-consultas-grid {
+    width: min(90%, 1100px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.contacto-card {
+    min-height: 270px;
+    padding: 35px 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #e5e5e5;
+    color: var(--color-letter);
+    transition: var(--transition);
+}
+
+.contacto-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-5px);
+}
+
+.contacto-card i {
+    margin-bottom: 25px;
+    color: var(--color-accent);
+    font-size: 1.6rem;
+}
+
+.contacto-card h3 {
+    margin-bottom: 15px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+}
+
+.contacto-card p {
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 0.78rem;
+    line-height: 1.7;
+}
+
+.contacto-card span {
+    margin-top: auto;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   SHOWROOM
+========================================================= */
+
+.contacto-showroom {
+    padding: 100px 20px;
+    background-color: var(--color-backnav);
+}
+
+.contacto-showroom-content {
+    width: min(90%, 1000px);
+    margin: 0 auto;
+}
+
+.contacto-showroom-text {
+    max-width: 650px;
+}
+
+.contacto-showroom-text h2 {
+    margin-bottom: 20px;
+    color: var(--color-letter);
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.contacto-showroom-text > p {
+    margin-bottom: 30px;
+    color: var(--color-dark);
+    font-size: 0.9rem;
+    line-height: 1.9;
+}
+
+.contacto-showroom-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.contacto-showroom-info div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: var(--color-letter);
+    font-size: 0.8rem;
+}
+
+.contacto-showroom-info i {
+    width: 20px;
+    color: var(--color-accent);
+    text-align: center;
+}
+
+.contacto-location-button {
+    display: inline-block;
+    padding: 13px 25px;
+    border: 1px solid var(--color-letter);
+    color: var(--color-letter);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    transition: var(--transition);
+}
+
+.contacto-location-button:hover {
+    background-color: var(--color-letter);
+    color: var(--color-white);
+}
+
+
+/* =========================================================
+   REDES
+========================================================= */
+
+.contacto-redes {
+    padding: 90px 20px;
+    text-align: center;
+    background-color: var(--color-white);
+}
+
+.contacto-redes h2 {
+    margin-bottom: 20px;
+    color: var(--color-letter);
+    font-size: 1.8rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.contacto-redes p {
+    max-width: 600px;
+    margin: 0 auto 30px;
+    color: var(--color-dark);
+    font-size: 0.9rem;
+    line-height: 1.8;
+}
+
+.contacto-redes-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.contacto-redes-links a {
+    min-width: 150px;
+    padding: 13px 20px;
+    border: 1px solid #e5e5e5;
+    color: var(--color-letter);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: var(--transition);
+}
+
+.contacto-redes-links a:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+.contacto-redes-links i {
+    margin-right: 7px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .contacto-consultas-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .contacto-whatsapp {
+        gap: 35px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .contacto-hero {
+        padding: 70px 20px 60px;
+    }
+
+    .contacto-hero h1 {
+        font-size: 2rem;
+    }
+
+    .contacto-whatsapp {
+        flex-direction: column;
+        gap: 30px;
+        padding: 70px 20px;
+        text-align: center;
+    }
+
+    .contacto-whatsapp-content {
+        width: 100%;
+    }
+
+    .contacto-whatsapp-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .contacto-consultas {
+        padding: 70px 20px;
+    }
+
+    .contacto-consultas-grid {
+        width: 100%;
+        grid-template-columns: 1fr;
+    }
+
+    .contacto-showroom {
+        padding: 70px 20px;
+    }
+
+    .contacto-showroom-content {
+        width: 100%;
+    }
+
+    .contacto-redes {
+        padding: 70px 20px;
+    }
+
+    .contacto-redes-links {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .contacto-redes-links a {
+        width: 100%;
+        max-width: 250px;
+    }
+
+}
