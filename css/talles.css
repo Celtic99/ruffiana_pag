@@ -1,0 +1,512 @@
+/* =========================
+   GUÍA DE TALLES — RUFFIANA
+========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+main .size-guide {
+    margin: 0;
+    background-color: #fff;
+    color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================
+   CONTENEDOR
+========================= */
+
+.size-guide {
+    width: 100%;
+    max-width: 1150px;
+
+    margin: 0 auto;
+    padding: 60px 30px;
+}
+
+
+/* =========================
+   ENCABEZADO
+========================= */
+
+.size-guide-header {
+    text-align: center;
+    margin-bottom: 55px;
+}
+
+.size-guide-subtitle {
+    display: block;
+
+    margin-bottom: 10px;
+
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 4px;
+
+    color: #8a7b6a;
+}
+
+.size-guide-header h1 {
+    margin: 0 0 12px;
+
+    font-size: 38px;
+    font-weight: 600;
+
+    color: #333;
+}
+
+.size-guide-header p {
+    margin: 0;
+
+    font-size: 15px;
+    line-height: 1.6;
+
+    color: #888;
+}
+
+
+/* =========================
+   CONTENIDO PRINCIPAL
+========================= */
+
+.size-guide-content {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+    gap: 65px;
+
+    align-items: center;
+}
+
+
+/* =========================
+   IMAGEN
+========================= */
+
+.size-guide-image {
+    width: 100%;
+    margin: 0;
+
+    text-align: center;
+}
+
+.size-guide-image img {
+    display: block;
+
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+
+    margin: 0 auto;
+}
+
+.size-guide-image figcaption {
+    margin-top: 15px;
+
+    font-size: 12px;
+    font-style: italic;
+
+    color: #999;
+}
+
+
+/* =========================
+   TABLA
+========================= */
+
+.size-guide-table-wrapper {
+    width: 100%;
+    min-width: 0;
+}
+
+.table-title {
+    margin-bottom: 25px;
+}
+
+.table-title h2 {
+    margin: 0 0 8px;
+
+    font-size: 22px;
+    font-weight: 600;
+
+    color: #333;
+}
+
+.table-title p {
+    margin: 0;
+
+    font-size: 14px;
+    line-height: 1.6;
+
+    color: #888;
+}
+
+
+/* =========================
+   TABLA RESPONSIVE
+========================= */
+
+.table-responsive {
+    width: 100%;
+
+    overflow-x: auto;
+
+    border-radius: 8px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+
+    -webkit-overflow-scrolling: touch;
+}
+
+.size-guide-table {
+    width: 100%;
+    min-width: 350px;
+
+    border-collapse: collapse;
+
+    text-align: center;
+}
+
+
+/* =========================
+   ENCABEZADO DE TABLA
+========================= */
+
+.size-guide-table thead th {
+    padding: 15px 18px;
+
+    background-color: #64584a;
+    color: #fff;
+
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+
+    white-space: nowrap;
+}
+
+
+/* =========================
+   CELDAS
+========================= */
+
+.size-guide-table tbody th,
+.size-guide-table tbody td {
+    padding: 14px 18px;
+
+    font-size: 14px;
+
+    border-bottom: 1px solid #eee;
+}
+
+.size-guide-table tbody th {
+    font-weight: 600;
+
+    color: #64584a;
+
+    white-space: nowrap;
+}
+
+.size-guide-table tbody td {
+    color: #555;
+}
+
+
+/* =========================
+   FILAS
+========================= */
+
+.size-guide-table tbody tr {
+    background-color: #fff;
+
+    transition: background-color 0.2s ease;
+}
+
+.size-guide-table tbody tr:nth-child(even) {
+    background-color: #faf9f7;
+}
+
+.size-guide-table tbody tr:hover {
+    background-color: #f1ede8;
+}
+
+.size-guide-table tbody tr:last-child th,
+.size-guide-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================
+   SECCIÓN DE AYUDA
+========================= */
+
+.size-guide-help {
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    width: 100%;
+    max-width: 750px;
+
+    margin: 65px auto 0;
+    padding: 22px 25px;
+
+    background-color: #faf9f7;
+
+    border: 1px solid #eee8e1;
+    border-radius: 10px;
+}
+
+.help-icon {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+
+    background-color: #64584a;
+    color: #fff;
+
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.help-content {
+    min-width: 0;
+}
+
+.help-content h2 {
+    margin: 0 0 5px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    color: #333;
+}
+
+.help-content p {
+    margin: 0;
+
+    font-size: 13px;
+    line-height: 1.6;
+
+    color: #777;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+    .size-guide {
+        padding: 45px 25px;
+    }
+
+    .size-guide-content {
+        gap: 40px;
+    }
+
+    .size-guide-header h1 {
+        font-size: 34px;
+    }
+
+    .size-guide-image img {
+        max-width: 430px;
+    }
+}
+
+
+/* =========================
+   CELULAR
+========================= */
+
+@media (max-width: 768px) {
+
+    .size-guide {
+        padding: 40px 18px;
+    }
+
+
+    /* -------------------------
+       Encabezado
+    ------------------------- */
+
+    .size-guide-header {
+        margin-bottom: 35px;
+    }
+
+    .size-guide-header h1 {
+        font-size: 28px;
+    }
+
+    .size-guide-header p {
+        font-size: 14px;
+    }
+
+
+    /* -------------------------
+       Imagen arriba / tabla abajo
+    ------------------------- */
+
+    .size-guide-content {
+        display: grid;
+
+        grid-template-columns: 1fr;
+
+        gap: 45px;
+
+        align-items: start;
+    }
+
+
+    /* -------------------------
+    Imagen
+    ------------------------- */
+
+    .size-guide-image {
+        margin: 0;
+
+        text-align: center;
+    }
+
+    .size-guide-image img {
+        width: 100%;
+        max-width: 420px;
+        padding: 15px;
+    }
+
+
+    /* -------------------------
+    Tabla
+    ------------------------- */
+
+    .size-guide-table-wrapper {
+        width: 100%;
+    }
+
+    .table-title {
+        margin-bottom: 18px;
+    }
+
+    .table-title h2 {
+        font-size: 20px;
+    }
+
+    .table-title p {
+        font-size: 13px;
+    }
+
+    .size-guide-table thead th,
+    .size-guide-table tbody th,
+    .size-guide-table tbody td {
+        padding: 12px 14px;
+    }
+
+
+    /* -------------------------
+    Ayuda
+    ------------------------- */
+
+    .size-guide-help {
+        margin-top: 45px;
+
+        padding: 18px;
+
+        align-items: flex-start;
+    }
+}
+
+
+/* =========================
+CELULAR PEQUEÑO
+========================= */
+
+@media (max-width: 480px) {
+
+    .size-guide {
+        padding: 35px 15px;
+    }
+
+
+    /* -------------------------
+       Encabezado
+    ------------------------- */
+
+    .size-guide-subtitle {
+        font-size: 11px;
+        letter-spacing: 3px;
+    }
+
+    .size-guide-header h1 {
+        font-size: 26px;
+    }
+
+    .size-guide-header p {
+        font-size: 13px;
+    }
+
+
+    /* -------------------------
+       Contenido
+    ------------------------- */
+
+    .size-guide-content {
+        gap: 35px;
+    }
+
+
+    /* -------------------------
+       Tabla
+    ------------------------- */
+
+    .size-guide-table {
+        min-width: 320px;
+    }
+
+    .size-guide-table thead th,
+    .size-guide-table tbody th,
+    .size-guide-table tbody td {
+        padding: 11px 12px;
+
+        font-size: 13px;
+    }
+
+
+    /* -------------------------
+       Ayuda
+    ------------------------- */
+
+    .size-guide-help {
+        gap: 12px;
+
+        padding: 16px;
+    }
+
+    .help-icon {
+        width: 34px;
+        height: 34px;
+
+        font-size: 16px;
+    }
+
+    .help-content h2 {
+        font-size: 14px;
+    }
+
+    .help-content p {
+        font-size: 12px;
+    }
+}
+

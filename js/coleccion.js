@@ -42,9 +42,18 @@ let paginaActual = 1;
 
 function esperarProductos() {
 
-    if (
+    const productosListos =
         Array.isArray(window.products) &&
-        window.products.length > 0
+        window.products.length > 0;
+
+
+    const saleListo =
+        Array.isArray(window.saleProducts);
+
+
+    if (
+        productosListos &&
+        saleListo
     ) {
 
         iniciarColeccion();

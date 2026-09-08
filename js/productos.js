@@ -175,7 +175,8 @@ function convertirPrecio(valor) {
     const precioTexto =
         String(valor ?? "0")
             .trim()
-            .replace("$", "")
+            .replace(/\$/g, "")
+            .replace(/\s/g, "")
             .replace(/\./g, "")
             .replace(",", ".");
 
@@ -289,11 +290,6 @@ function prepararProductos(datos) {
             if (!productoBase) {
 
                 productoBase = {
-
-                    /*
-                       IMPORTANTE:
-                       El ID representa al producto agrupado.
-                    */
 
                     id:
                         `producto-${nombre}`,
@@ -473,7 +469,7 @@ function mostrarProductos(productos) {
 
 
         /* =================================================
-           PRECIOS
+           PRECIOS NORMALES
         ================================================= */
 
         const precios =
@@ -493,7 +489,81 @@ function mostrarProductos(productos) {
         let precioHTML = "";
 
 
-        if (precios.length > 0) {
+        /* =================================================
+           BUSCAR PRODUCTO EN SALE
+        ================================================= */
+
+        const productoSale =
+            Array.isArray(window.saleProducts)
+                ? window.saleProducts.find(
+                    saleProducto =>
+                        saleProducto.name === producto.name
+                )
+                : null;
+
+
+        /* =================================================
+           PRECIO SALE
+        ================================================= */
+
+        if (
+            productoSale &&
+            Number(productoSale.salePrice) > 0 &&
+            Number(productoSale.originalPrice) > 0
+        ) {
+
+            const precioOriginal =
+                Number(
+                    productoSale.originalPrice
+                );
+
+
+            const precioSale =
+                Number(
+                    productoSale.salePrice
+                );
+
+
+            const descuento =
+                Math.round(
+                    (
+                        1 -
+                        precioSale /
+                        precioOriginal
+                    ) * 100
+                );
+
+
+            precioHTML = `
+
+                <div class="product-price-sale">
+
+                    <span class="product-price-original">
+                        ${formatPrice(precioOriginal)}
+                    </span>
+
+                    <span class="sale-price">
+                        ${formatPrice(precioSale)}
+                    </span>
+
+                    <span class="sale-discount">
+                        ${descuento}% OFF
+                    </span>
+
+                </div>
+
+            `;
+
+        }
+
+
+        /* =================================================
+           PRECIO NORMAL
+        ================================================= */
+
+        else if (
+            precios.length > 0
+        ) {
 
             const precioMin =
                 Math.min(...precios);
@@ -520,12 +590,17 @@ function mostrarProductos(productos) {
 
         }
 
-        window.mostrarProductos = mostrarProductos;
+
+        /* =================================================
+           BOTÓN
+        ================================================= */
 
         let botonHTML;
 
 
-        if (stockTotal <= 0) {
+        if (
+            stockTotal <= 0
+        ) {
 
             botonHTML = `
 
@@ -595,18 +670,18 @@ function mostrarProductos(productos) {
                     variantes.length > 1
                         ? `
                             <p class="product-variants">
-                                ${
-                                    variantes.length
-                                } variantes
+                                ${variantes.length} variantes
                             </p>
                         `
                         : ""
                 }
 
 
-                <p class="product-price">
+                <div class="product-price">
+
                     ${precioHTML}
-                </p>
+
+                </div>
 
 
                 ${
@@ -637,6 +712,14 @@ function mostrarProductos(productos) {
 
 
 /* =========================================================
+   DISPONIBLE PARA COLECCION.JS Y SALEOFF.JS
+========================================================= */
+
+window.mostrarProductos =
+    mostrarProductos;
+
+
+/* =========================================================
    8. FORMATO DE PRECIO
 ========================================================= */
 
@@ -663,7 +746,6 @@ if (productsGrid) {
     productsGrid.addEventListener(
         "click",
         function(event) {
-
 
             const elemento =
                 event.target.closest(
@@ -754,12 +836,13 @@ async function cargarProductosDesdeGoogle() {
         /* =================================================
            PREPARAR PRODUCTOS
         ================================================= */
+
         window.products =
             prepararProductos(
                 datos
             );
-        
-        
+
+
         console.log(
             "PRODUCTOS AGRUPADOS:"
         );
@@ -769,32 +852,34 @@ async function cargarProductosDesdeGoogle() {
             window.products
         );
 
+
         /* =================================================
            MOSTRAR
         ================================================= */
 
-mostrarProductos(
-    window.products
-);
+        mostrarProductos(
+            window.products
+        );
+
 
         /* =================================================
            DEBUG DE VARIANTES
         ================================================= */
 
-    window.products.forEach(
-        producto => {
+        window.products.forEach(
+            producto => {
 
-            console.log(
-                `PRODUCTO: ${producto.name}`
-            );
+                console.log(
+                    `PRODUCTO: ${producto.name}`
+                );
 
 
-            console.table(
-                producto.variants
-            );
+                console.table(
+                    producto.variants
+                );
 
-        }
-    );
+            }
+        );
 
 
     } catch (error) {
@@ -807,6 +892,7 @@ mostrarProductos(
     }
 
 }
+
 
 /* =========================================================
    11. INICIAR
@@ -858,7 +944,6 @@ async function iniciarProductos() {
     const resultados =
         window.products.filter(
             producto => {
-
 
                 /* ==============================
                    NOMBRE
@@ -975,7 +1060,6 @@ async function iniciarProductos() {
 
     /* =====================================================
        BORRAR BÚSQUEDA
-       Para que no quede guardada para siempre.
     ===================================================== */
 
     sessionStorage.removeItem(

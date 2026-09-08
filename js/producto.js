@@ -1,6 +1,7 @@
 /* =========================================================
    RUFFIANA — PRODUCTO INDIVIDUAL
    Google Sheets + Variantes + Carrito
+   NORMAL + SALE
 ========================================================= */
 
 
@@ -10,6 +11,10 @@
 
 const GOOGLE_SHEETS_URL =
     "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7_lNtXTgezW5_wkaeCw-ldncnFhgAuxzFokw4yET6R_TTyfIo4QBW9L167Snqq3pitUdLHGlO6Phv/pub?gid=1517502785&single=true&output=csv";
+
+
+const GOOGLE_SHEETS_SALE_URL =
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7_lNtXTgezW5_wkaeCw-ldncnFhgAuxzFokw4yET6R_TTyfIo4QBW9L167Snqq3pitUdLHGlO6Phv/pub?gid=885919874&single=true&output=csv";
 
 
 /* =========================================================
@@ -31,6 +36,7 @@ const params =
         window.location.search
     );
 
+
 const productId =
     params.get("id");
 
@@ -42,7 +48,24 @@ console.log(
 
 
 /* =========================================================
-   4. CONVERTIR CSV
+   4. DETECTAR SI EL USUARIO VIENE DESDE SALE
+========================================================= */
+
+const idEsSale =
+    productId &&
+    productId.startsWith(
+        "sale-producto-"
+    );
+
+
+console.log(
+    "¿VIENE DESDE SALE?:",
+    idEsSale
+);
+
+
+/* =========================================================
+   5. CONVERTIR CSV
 ========================================================= */
 
 function convertirCSV(csv) {
@@ -60,12 +83,17 @@ function convertirCSV(csv) {
         i++
     ) {
 
-        const caracter = csv[i];
+        const caracter =
+            csv[i];
 
 
-        /* COMILLAS */
+        /* =================================================
+           COMILLAS
+        ================================================= */
 
-        if (caracter === '"') {
+        if (
+            caracter === '"'
+        ) {
 
             if (
                 dentroDeComillas &&
@@ -73,6 +101,7 @@ function convertirCSV(csv) {
             ) {
 
                 valor += '"';
+
                 i++;
 
             } else {
@@ -85,21 +114,27 @@ function convertirCSV(csv) {
         }
 
 
-        /* COMA */
+        /* =================================================
+           COMA
+        ================================================= */
 
         else if (
             caracter === "," &&
             !dentroDeComillas
         ) {
 
-            fila.push(valor);
+            fila.push(
+                valor
+            );
 
             valor = "";
 
         }
 
 
-        /* FIN DE FILA */
+        /* =================================================
+           FIN DE FILA
+        ================================================= */
 
         else if (
             (
@@ -119,9 +154,15 @@ function convertirCSV(csv) {
             }
 
 
-            fila.push(valor);
+            fila.push(
+                valor
+            );
 
-            filas.push(fila);
+
+            filas.push(
+                fila
+            );
+
 
             fila = [];
 
@@ -130,39 +171,52 @@ function convertirCSV(csv) {
         }
 
 
-        /* TEXTO */
+        /* =================================================
+           TEXTO
+        ================================================= */
 
         else {
 
-            valor += caracter;
+            valor +=
+                caracter;
 
         }
 
     }
 
 
-    /* ÚLTIMA FILA */
+    /* =================================================
+       ÚLTIMA FILA
+    ================================================= */
 
     if (
         valor !== "" ||
         fila.length > 0
     ) {
 
-        fila.push(valor);
+        fila.push(
+            valor
+        );
 
-        filas.push(fila);
+        filas.push(
+            fila
+        );
 
     }
 
 
-    if (filas.length === 0) {
+    if (
+        filas.length === 0
+    ) {
 
         return [];
 
     }
 
 
-    /* ENCABEZADOS */
+    /* =================================================
+       ENCABEZADOS
+    ================================================= */
 
     const encabezados =
         filas
@@ -171,56 +225,87 @@ function convertirCSV(csv) {
                 encabezado =>
                     encabezado
                         .trim()
-                        .replace(/^\uFEFF/, "")
+                        .replace(
+                            /^\uFEFF/,
+                            ""
+                        )
             );
 
 
-    /* OBJETOS */
+    /* =================================================
+       OBJETOS
+    ================================================= */
 
-    return filas.map(fila => {
+    return filas.map(
+        fila => {
 
-        const producto = {};
-
-
-        encabezados.forEach(
-            (encabezado, index) => {
-
-                producto[encabezado] =
-                    fila[index]
-                        ?.trim() || "";
-
-            }
-        );
+            const producto = {};
 
 
-        return producto;
+            encabezados.forEach(
+                (
+                    encabezado,
+                    index
+                ) => {
 
-    });
+                    producto[
+                        encabezado
+                    ] =
+                        fila[index]
+                            ?.trim() || "";
+
+                }
+            );
+
+
+            return producto;
+
+        }
+    );
 
 }
 
 
 /* =========================================================
-   5. CONVERTIR PRECIO
+   6. CONVERTIR PRECIO
 ========================================================= */
 
-function convertirPrecio(valor) {
+function convertirPrecio(
+    valor
+) {
 
     const precioTexto =
-        String(valor ?? "0")
+        String(
+            valor ?? "0"
+        )
             .trim()
-            .replace("$", "")
-            .replace(/\./g, "")
-            .replace(",", ".");
+            .replace(
+                /\$/g,
+                ""
+            )
+            .replace(
+                /\s/g,
+                ""
+            )
+            .replace(
+                /\./g,
+                ""
+            )
+            .replace(
+                ",",
+                "."
+            );
 
 
-    return Number(precioTexto) || 0;
+    return Number(
+        precioTexto
+    ) || 0;
 
 }
 
 
 /* =========================================================
-   6. OBTENER DATOS DE GOOGLE SHEETS
+   7. OBTENER DATOS DE GOOGLE SHEETS
 ========================================================= */
 
 async function cargarProducto() {
@@ -232,13 +317,33 @@ async function cargarProducto() {
         );
 
 
+        /* =================================================
+           SI VIENE DE SALE → CARGAMOS SALE
+        ================================================= */
+
+        const url =
+            idEsSale
+                ? GOOGLE_SHEETS_SALE_URL
+                : GOOGLE_SHEETS_URL;
+
+
+        console.log(
+            "SHEET INICIAL:",
+            idEsSale
+                ? "SALE"
+                : "NORMAL"
+        );
+
+
         const response =
             await fetch(
-                GOOGLE_SHEETS_URL
+                url
             );
 
 
-        if (!response.ok) {
+        if (
+            !response.ok
+        ) {
 
             throw new Error(
                 `Error HTTP ${response.status}`
@@ -252,30 +357,46 @@ async function cargarProducto() {
 
 
         const datos =
-            convertirCSV(csv);
+            convertirCSV(
+                csv
+            );
 
 
         console.log(
             "DATOS DE GOOGLE SHEETS:"
         );
 
-        console.table(datos);
+
+        console.table(
+            datos
+        );
 
 
         /* =================================================
-           BUSCAR EL PRODUCTO
-           
-           productos.js manda:
-           
-           producto-NOMBRE
-           
-           Por eso primero buscamos por nombre.
+           OBTENER NOMBRE
         ================================================= */
 
         let nombreBuscado = "";
 
 
         if (
+            productId &&
+            productId.startsWith(
+                "sale-producto-"
+            )
+        ) {
+
+            nombreBuscado =
+                decodeURIComponent(
+                    productId.replace(
+                        "sale-producto-",
+                        ""
+                    )
+                );
+
+        }
+
+        else if (
             productId &&
             productId.startsWith(
                 "producto-"
@@ -300,31 +421,191 @@ async function cargarProducto() {
 
 
         /* =================================================
-           BUSCAR TODAS LAS VARIANTES
+           BUSCAR VARIANTES
         ================================================= */
 
         let variantes =
-            datos.filter(producto => {
+            datos.filter(
+                producto => {
 
-                const nombre =
-                    String(
-                        producto["Nombre"] || ""
-                    ).trim();
+                    const nombre =
+                        String(
+                            producto["Nombre"] ||
+                            ""
+                        ).trim();
 
 
-                return (
-                    nombre ===
-                    nombreBuscado
-                );
+                    return (
+                        nombre ===
+                        nombreBuscado
+                    );
 
-            });
+                }
+            );
 
 
         /* =================================================
-           COMPATIBILIDAD
-           
-           Por si alguna página vieja todavía
-           manda directamente el Código.
+           SI VIENE DESDE COLECCIÓN
+           BUSCAMOS TAMBIÉN SU PRECIO SALE
+        ================================================= */
+
+        if (
+            !idEsSale &&
+            variantes.length > 0
+        ) {
+
+            const nombreProducto =
+                variantes[0]["Nombre"];
+
+
+            try {
+
+                const responseSale =
+                    await fetch(
+                        GOOGLE_SHEETS_SALE_URL
+                    );
+
+
+                if (
+                    responseSale.ok
+                ) {
+
+                    const csvSale =
+                        await responseSale.text();
+
+
+                    const datosSale =
+                        convertirCSV(
+                            csvSale
+                        );
+
+
+                    const variantesSale =
+                        datosSale.filter(
+                            producto => {
+
+                                const nombre =
+                                    String(
+                                        producto["Nombre"] ||
+                                        ""
+                                    ).trim();
+
+
+                                return (
+                                    nombre ===
+                                    nombreProducto
+                                );
+
+                            }
+                        );
+
+
+                    /* =====================================
+                       SI EXISTE EN SALE
+                    ===================================== */
+
+                    if (
+                        variantesSale.length > 0
+                    ) {
+
+                        console.log(
+                            "¡PRODUCTO ENCONTRADO EN SALE!"
+                        );
+
+
+                        /*
+                           Combinamos la información
+                           NORMAL + SALE.
+
+                           Se busca cada variante
+                           por COLOR + TALLE.
+                        */
+
+                        variantes =
+                            variantes.map(
+                                varianteNormal => {
+
+                                    const varianteSale =
+                                        variantesSale.find(
+                                            variante => {
+
+                                                return (
+
+                                                    String(
+                                                        variante["Color"] ||
+                                                        ""
+                                                    ).trim() ===
+                                                    String(
+                                                        varianteNormal["Color"] ||
+                                                        ""
+                                                    ).trim()
+
+                                                    &&
+
+                                                    String(
+                                                        variante["Talle"] ||
+                                                        ""
+                                                    ).trim() ===
+                                                    String(
+                                                        varianteNormal["Talle"] ||
+                                                        ""
+                                                    ).trim()
+
+                                                );
+
+                                            }
+                                        );
+
+
+                                    if (
+                                        varianteSale
+                                    ) {
+
+                                        return {
+
+                                            ...varianteNormal,
+
+                                            "Precio SALE":
+                                                varianteSale[
+                                                    "Precio SALE"
+                                                ]
+
+                                        };
+
+                                    }
+
+
+                                    return varianteNormal;
+
+                                }
+                            );
+
+
+                        console.log(
+                            "VARIANTES CON SALE:",
+                            variantes
+                        );
+
+                    }
+
+                }
+
+            } catch (
+                errorSale
+            ) {
+
+                console.warn(
+                    "No se pudo consultar el Sheet SALE:",
+                    errorSale
+                );
+
+            }
+
+        }
+
+
+        /* =================================================
+           COMPATIBILIDAD POR CÓDIGO
         ================================================= */
 
         if (
@@ -332,18 +613,23 @@ async function cargarProducto() {
         ) {
 
             variantes =
-                datos.filter(producto => {
+                datos.filter(
+                    producto => {
 
-                    return (
-                        String(
-                            producto["Código"] || ""
-                        ).trim() ===
-                        String(
-                            productId
-                        ).trim()
-                    );
+                        return (
 
-                });
+                            String(
+                                producto["Código"] ||
+                                ""
+                            ).trim() ===
+                            String(
+                                productId
+                            ).trim()
+
+                        );
+
+                    }
+                );
 
         }
 
@@ -363,6 +649,7 @@ async function cargarProducto() {
 
             mostrarProductoNoEncontrado();
 
+
             return;
 
         }
@@ -371,6 +658,7 @@ async function cargarProducto() {
         console.log(
             "VARIANTES ENCONTRADAS:"
         );
+
 
         console.table(
             variantes
@@ -386,7 +674,9 @@ async function cargarProducto() {
         );
 
 
-    } catch (error) {
+    } catch (
+        error
+    ) {
 
         console.error(
             "Error cargando producto:",
@@ -399,13 +689,12 @@ async function cargarProducto() {
 
 
 /* =========================================================
-   7. MOSTRAR PRODUCTO
+   8. MOSTRAR PRODUCTO
 ========================================================= */
 
 function mostrarProducto(
     variantes
 ) {
-
 
     /* =====================================================
        PRODUCTO PRINCIPAL
@@ -416,15 +705,84 @@ function mostrarProducto(
 
 
     const nombre =
-        primeraVariante["Nombre"] || "";
+        primeraVariante[
+            "Nombre"
+        ] || "";
 
 
     const category =
-        primeraVariante["Categoría"] || "";
+        primeraVariante[
+            "Categoría"
+        ] || "";
 
 
     const description =
-        primeraVariante["Descripción"] || "";
+        primeraVariante[
+            "Descripción"
+        ] || "";
+
+
+    /* =====================================================
+       DETERMINAR SI REALMENTE TIENE SALE
+    ===================================================== */
+
+    const tieneSale =
+        variantes.some(
+            variante => {
+
+                const original =
+                    convertirPrecio(
+                        variante[
+                            "Precio"
+                        ]
+                    );
+
+
+                const sale =
+                    convertirPrecio(
+                        variante[
+                            "Precio SALE"
+                        ]
+                    );
+
+
+                return (
+                    original > 0 &&
+                    sale > 0 &&
+                    sale < original
+                );
+
+            }
+        );
+
+
+    /*
+       IMPORTANTE:
+
+       esProductoSale sirve solamente para
+       saber si mostramos precio SALE.
+
+       NO se utiliza para decidir desde dónde
+       volvió el usuario.
+    */
+
+    const esProductoSale =
+        Boolean(
+            idEsSale ||
+            tieneSale
+        );
+
+
+    console.log(
+        "¿EL PRODUCTO TIENE SALE?:",
+        esProductoSale
+    );
+
+
+    console.log(
+        "¿EL USUARIO VIENE DESDE SALE?:",
+        idEsSale
+    );
 
 
     /* =====================================================
@@ -437,10 +795,13 @@ function mostrarProducto(
                 .map(
                     variante =>
                         String(
-                            variante["Color"] || ""
+                            variante["Color"] ||
+                            ""
                         ).trim()
                 )
-                .filter(Boolean)
+                .filter(
+                    Boolean
+                )
         )
     ];
 
@@ -455,10 +816,13 @@ function mostrarProducto(
                 .map(
                     variante =>
                         String(
-                            variante["Talle"] || ""
+                            variante["Talle"] ||
+                            ""
                         ).trim()
                 )
-                .filter(Boolean)
+                .filter(
+                    Boolean
+                )
         )
     ];
 
@@ -472,7 +836,8 @@ function mostrarProducto(
             variante =>
                 Number(
                     String(
-                        variante["Stock"] || "0"
+                        variante["Stock"] ||
+                        "0"
                     ).trim()
                 ) > 0
         ) ||
@@ -517,7 +882,8 @@ function mostrarProducto(
 
 
     let imagenPrincipal =
-        imagenes[0] || "";
+        imagenes[0] ||
+        "";
 
 
     /* =====================================================
@@ -530,7 +896,10 @@ function mostrarProducto(
 
         return imagenesActuales
             .map(
-                (imagen, index) => {
+                (
+                    imagen,
+                    index
+                ) => {
 
                     return `
 
@@ -557,13 +926,63 @@ function mostrarProducto(
 
 
     /* =====================================================
-       PRECIO
+       PRECIO INICIAL
     ===================================================== */
 
     const precioInicial =
         convertirPrecio(
-            varianteSeleccionada["Precio"]
+            varianteSeleccionada[
+                "Precio"
+            ]
         );
+
+
+    const precioSaleInicial =
+        convertirPrecio(
+            varianteSeleccionada[
+                "Precio SALE"
+            ]
+        );
+
+
+    /* =====================================================
+       PRECIO ACTUAL
+    ===================================================== */
+
+    const precioActual =
+        esProductoSale &&
+        precioSaleInicial > 0 &&
+        precioSaleInicial < precioInicial
+            ? precioSaleInicial
+            : precioInicial;
+
+
+    /* =====================================================
+       DESCUENTO
+    ===================================================== */
+
+    let descuentoInicial =
+        0;
+
+
+    if (
+        esProductoSale &&
+        precioInicial > 0 &&
+        precioSaleInicial > 0 &&
+        precioSaleInicial <
+        precioInicial
+    ) {
+
+        descuentoInicial =
+            Math.round(
+                (
+                    1 -
+                    precioSaleInicial /
+                    precioInicial
+                ) * 100
+            );
+
+    }
 
 
     /* =====================================================
@@ -572,7 +991,9 @@ function mostrarProducto(
 
     const stockInicial =
         Number(
-            varianteSeleccionada["Stock"] || "0"
+            varianteSeleccionada[
+                "Stock"
+            ] || "0"
         );
 
 
@@ -580,7 +1001,8 @@ function mostrarProducto(
        OPCIONES DE COLOR
     ===================================================== */
 
-    let coloresHTML = "";
+    let coloresHTML =
+        "";
 
 
     if (
@@ -610,7 +1032,9 @@ function mostrarProducto(
                                         String(
                                             varianteSeleccionada["Color"] || ""
                                         ) ===
-                                        String(color);
+                                        String(
+                                            color
+                                        );
 
 
                                     return `
@@ -647,7 +1071,8 @@ function mostrarProducto(
        OPCIONES DE TALLE
     ===================================================== */
 
-    let tallesHTML = "";
+    let tallesHTML =
+        "";
 
 
     if (
@@ -677,7 +1102,9 @@ function mostrarProducto(
                                         String(
                                             varianteSeleccionada["Talle"] || ""
                                         ) ===
-                                        String(talle);
+                                        String(
+                                            talle
+                                        );
 
 
                                     return `
@@ -718,7 +1145,6 @@ function mostrarProducto(
 
 
     if (
-        isNaN(stockInicial) ||
         stockInicial <= 0
     ) {
 
@@ -753,6 +1179,78 @@ function mostrarProducto(
 
 
     /* =====================================================
+       HTML DEL PRECIO
+    ===================================================== */
+
+    let precioHTML =
+        "";
+
+
+    if (
+        esProductoSale &&
+        precioInicial > 0 &&
+        precioSaleInicial > 0 &&
+        precioSaleInicial <
+        precioInicial
+    ) {
+
+        precioHTML = `
+
+            <div
+                class="product-detail-sale-price"
+                id="product-detail-price"
+            >
+
+                <span
+                    class="product-detail-original-price"
+                    id="product-detail-original-price"
+                >
+                    ${formatPrice(
+                        precioInicial
+                    )}
+                </span>
+
+
+                <span
+                    class="product-detail-sale"
+                    id="product-detail-sale"
+                >
+                    ${formatPrice(
+                        precioSaleInicial
+                    )}
+                </span>
+
+
+                <span
+                    class="product-detail-discount"
+                    id="product-detail-discount"
+                >
+                    -${descuentoInicial}% OFF
+                </span>
+
+            </div>
+
+        `;
+
+    } else {
+
+        precioHTML = `
+
+            <p
+                class="product-detail-price"
+                id="product-detail-price"
+            >
+                ${formatPrice(
+                    precioActual
+                )}
+            </p>
+
+        `;
+
+    }
+
+
+    /* =====================================================
        HTML
     ===================================================== */
 
@@ -766,7 +1264,9 @@ function mostrarProducto(
                 id="product-thumbnails"
             >
 
-                ${generarMiniaturas(imagenes)}
+                ${generarMiniaturas(
+                    imagenes
+                )}
 
             </div>
 
@@ -788,11 +1288,27 @@ function mostrarProducto(
         <div class="product-detail-info">
 
 
+            <!-- =========================================
+                 VOLVER
+                 IMPORTANTE:
+
+                 idEsSale = viene desde SALE
+                 si no = viene desde COLECCIÓN
+            ========================================== -->
+
             <a
-                href="./coleccion.html"
+                href="${
+                    idEsSale
+                        ? "./saleoff.html"
+                        : "./coleccion.html"
+                }"
                 class="back-to-collection"
             >
-                ← VOLVER A COLECCIÓN
+                ← ${
+                    idEsSale
+                        ? "VOLVER A SALE"
+                        : "VOLVER A COLECCIÓN"
+                }
             </a>
 
 
@@ -807,12 +1323,7 @@ function mostrarProducto(
             ${tallesHTML}
 
 
-            <p
-                class="product-detail-price"
-                id="product-detail-price"
-            >
-                ${formatPrice(precioInicial)}
-            </p>
+            ${precioHTML}
 
 
             ${
@@ -872,12 +1383,6 @@ function mostrarProducto(
         );
 
 
-    const priceElement =
-        document.getElementById(
-            "product-detail-price"
-        );
-
-
     const stockElement =
         document.getElementById(
             "product-stock"
@@ -921,7 +1426,9 @@ function mostrarProducto(
             imagenes[0];
 
 
-        if (mainImage) {
+        if (
+            mainImage
+        ) {
 
             mainImage.src =
                 imagenPrincipal;
@@ -929,7 +1436,9 @@ function mostrarProducto(
         }
 
 
-        if (thumbnailsContainer) {
+        if (
+            thumbnailsContainer
+        ) {
 
             thumbnailsContainer.innerHTML =
                 generarMiniaturas(
@@ -945,7 +1454,7 @@ function mostrarProducto(
 
 
     /* =====================================================
-       EVENTOS DE MINIATURAS
+       MINIATURAS
     ===================================================== */
 
     function agregarEventosMiniaturas() {
@@ -963,7 +1472,9 @@ function mostrarProducto(
                     "click",
                     () => {
 
-                        if (mainImage) {
+                        if (
+                            mainImage
+                        ) {
 
                             mainImage.src =
                                 button.dataset.image;
@@ -980,6 +1491,139 @@ function mostrarProducto(
 
 
     agregarEventosMiniaturas();
+
+
+    /* =====================================================
+       ACTUALIZAR PRECIO
+    ===================================================== */
+
+    function actualizarPrecio(
+        variante
+    ) {
+
+        const precioOriginal =
+            convertirPrecio(
+                variante[
+                    "Precio"
+                ]
+            );
+
+
+        const precioSale =
+            convertirPrecio(
+                variante[
+                    "Precio SALE"
+                ]
+            );
+
+
+        const tieneDescuento =
+            esProductoSale &&
+            precioOriginal > 0 &&
+            precioSale > 0 &&
+            precioSale <
+            precioOriginal;
+
+
+        const contenedorPrecio =
+            document.getElementById(
+                "product-detail-price"
+            );
+
+
+        /* =================================================
+           SALE
+        ================================================= */
+
+        if (
+            tieneDescuento
+        ) {
+
+            const descuento =
+                Math.round(
+                    (
+                        1 -
+                        precioSale /
+                        precioOriginal
+                    ) * 100
+                );
+
+
+            if (
+                contenedorPrecio
+            ) {
+
+                contenedorPrecio.outerHTML = `
+
+                    <div
+                        class="product-detail-sale-price"
+                        id="product-detail-price"
+                    >
+
+                        <span
+                            class="product-detail-original-price"
+                            id="product-detail-original-price"
+                        >
+                            ${formatPrice(
+                                precioOriginal
+                            )}
+                        </span>
+
+
+                        <span
+                            class="product-detail-sale"
+                            id="product-detail-sale"
+                        >
+                            ${formatPrice(
+                                precioSale
+                            )}
+                        </span>
+
+
+                        <span
+                            class="product-detail-discount"
+                            id="product-detail-discount"
+                        >
+                            -${descuento}% OFF
+                        </span>
+
+                    </div>
+
+                `;
+
+            }
+
+        }
+
+
+        /* =================================================
+           NORMAL
+        ================================================= */
+
+        else {
+
+            if (
+                contenedorPrecio
+            ) {
+
+                contenedorPrecio.outerHTML = `
+
+                    <p
+                        class="product-detail-price"
+                        id="product-detail-price"
+                    >
+                        ${formatPrice(
+                            precioOriginal
+                        )}
+                    </p>
+
+                `;
+
+            }
+
+        }
+
+    }
 
 
     /* =====================================================
@@ -1028,7 +1672,7 @@ function mostrarProducto(
 
 
         /* =================================================
-           SI HAY COLOR Y TALLE
+           COLOR + TALLE
         ================================================= */
 
         if (
@@ -1043,7 +1687,8 @@ function mostrarProducto(
                         return (
 
                             String(
-                                variante["Color"] || ""
+                                variante["Color"] ||
+                                ""
                             ).trim() ===
                             String(
                                 colorSeleccionado
@@ -1052,7 +1697,8 @@ function mostrarProducto(
                             &&
 
                             String(
-                                variante["Talle"] || ""
+                                variante["Talle"] ||
+                                ""
                             ).trim() ===
                             String(
                                 talleSeleccionado
@@ -1080,7 +1726,8 @@ function mostrarProducto(
 
                         return (
                             String(
-                                variante["Color"] || ""
+                                variante["Color"] ||
+                                ""
                             ).trim() ===
                             String(
                                 colorSeleccionado
@@ -1107,7 +1754,8 @@ function mostrarProducto(
 
                         return (
                             String(
-                                variante["Talle"] || ""
+                                variante["Talle"] ||
+                                ""
                             ).trim() ===
                             String(
                                 talleSeleccionado
@@ -1120,25 +1768,37 @@ function mostrarProducto(
         }
 
 
-        if (!encontrada) {
+        /* =================================================
+           NO EXISTE
+        ================================================= */
+
+        if (
+            !encontrada
+        ) {
 
             console.warn(
                 "No existe esta combinación de variante."
             );
 
-            if (addButton) {
+
+            if (
+                addButton
+            ) {
 
                 addButton.disabled =
                     true;
+
 
                 addButton.classList.add(
                     "disabled"
                 );
 
+
                 addButton.textContent =
                     "SIN STOCK";
 
             }
+
 
             return;
 
@@ -1153,37 +1813,30 @@ function mostrarProducto(
             encontrada;
 
 
-        const precio =
-            convertirPrecio(
-                encontrada["Precio"]
-            );
+        /* =================================================
+           PRECIO
+        ================================================= */
 
+        actualizarPrecio(
+            encontrada
+        );
+
+
+        /* =================================================
+           STOCK
+        ================================================= */
 
         const stock =
             Number(
-                encontrada["Stock"] || "0"
+                encontrada[
+                    "Stock"
+                ] || "0"
             );
 
 
-        /* =================================================
-           ACTUALIZAR PRECIO
-        ================================================= */
-
-        if (priceElement) {
-
-            priceElement.textContent =
-                formatPrice(
-                    precio
-                );
-
-        }
-
-
-        /* =================================================
-           ACTUALIZAR STOCK
-        ================================================= */
-
-        if (stockElement) {
+        if (
+            stockElement
+        ) {
 
             stockElement.textContent =
                 stock > 0
@@ -1194,7 +1847,7 @@ function mostrarProducto(
 
 
         /* =================================================
-           ACTUALIZAR IMAGEN
+           IMAGEN
         ================================================= */
 
         actualizarGaleria(
@@ -1203,19 +1856,25 @@ function mostrarProducto(
 
 
         /* =================================================
-           ACTUALIZAR BOTÓN
+           BOTÓN
         ================================================= */
 
-        if (addButton) {
+        if (
+            addButton
+        ) {
 
-            if (stock > 0) {
+            if (
+                stock > 0
+            ) {
 
                 addButton.disabled =
                     false;
 
+
                 addButton.classList.remove(
                     "disabled"
                 );
+
 
                 addButton.textContent =
                     "AGREGAR AL CARRITO";
@@ -1225,9 +1884,11 @@ function mostrarProducto(
                 addButton.disabled =
                     true;
 
+
                 addButton.classList.add(
                     "disabled"
                 );
+
 
                 addButton.textContent =
                     "SIN STOCK";
@@ -1238,7 +1899,7 @@ function mostrarProducto(
 
 
         /* =================================================
-           ACTUALIZAR TEXTOS
+           COLOR Y TALLE SELECCIONADOS
         ================================================= */
 
         const selectedColor =
@@ -1253,18 +1914,26 @@ function mostrarProducto(
             );
 
 
-        if (selectedColor) {
+        if (
+            selectedColor
+        ) {
 
             selectedColor.textContent =
-                encontrada["Color"] || "";
+                encontrada[
+                    "Color"
+                ] || "";
 
         }
 
 
-        if (selectedSize) {
+        if (
+            selectedSize
+        ) {
 
             selectedSize.textContent =
-                encontrada["Talle"] || "";
+                encontrada[
+                    "Talle"
+                ] || "";
 
         }
 
@@ -1365,16 +2034,13 @@ function mostrarProducto(
        AGREGAR AL CARRITO
     ===================================================== */
 
-    if (addButton) {
+    if (
+        addButton
+    ) {
 
         addButton.addEventListener(
             "click",
             () => {
-
-
-                /* =========================================
-                   VARIANTE ACTUAL
-                ========================================= */
 
                 const variante =
                     varianteSeleccionada;
@@ -1382,7 +2048,9 @@ function mostrarProducto(
 
                 const stock =
                     Number(
-                        variante["Stock"] || "0"
+                        variante[
+                            "Stock"
+                        ] || "0"
                     );
 
 
@@ -1394,9 +2062,43 @@ function mostrarProducto(
                         "Este producto no tiene stock disponible."
                     );
 
+
                     return;
 
                 }
+
+
+                /* =========================================
+                   PRECIOS
+                ========================================= */
+
+                const precioOriginal =
+                    convertirPrecio(
+                        variante[
+                            "Precio"
+                        ]
+                    );
+
+
+                const precioSale =
+                    convertirPrecio(
+                        variante[
+                            "Precio SALE"
+                        ]
+                    );
+
+
+                const tieneDescuento =
+                    esProductoSale &&
+                    precioSale > 0 &&
+                    precioSale <
+                    precioOriginal;
+
+
+                const precioCarrito =
+                    tieneDescuento
+                        ? precioSale
+                        : precioOriginal;
 
 
                 /* =========================================
@@ -1406,34 +2108,62 @@ function mostrarProducto(
                 const productoParaCarrito = {
 
                     id:
-                        variante["Código"],
+                        variante[
+                            "Código"
+                        ],
+
 
                     name:
                         nombre,
 
+
                     price:
-                        convertirPrecio(
-                            variante["Precio"]
-                        ),
+                        precioCarrito,
+
 
                     color:
-                        variante["Color"] || "",
+                        variante[
+                            "Color"
+                        ] || "",
+
 
                     size:
-                        variante["Talle"] || "",
+                        variante[
+                            "Talle"
+                        ] || "",
+
 
                     category:
                         category,
 
+
                     image:
-                        variante["Imagen"] ||
+                        variante[
+                            "Imagen"
+                        ] ||
                         imagenPrincipal,
+
 
                     stock:
                         stock,
 
+
                     description:
-                        description
+                        description,
+
+
+                    isSale:
+                        tieneDescuento,
+
+
+                    originalPrice:
+                        precioOriginal,
+
+
+                    salePrice:
+                        tieneDescuento
+                            ? precioSale
+                            : 0
 
                 };
 
@@ -1452,18 +2182,6 @@ function mostrarProducto(
 
                 /* =========================================
                    BUSCAR MISMA VARIANTE
-                   
-                   IMPORTANTE:
-                   Se compara por Código de Odoo.
-                   
-                   Por eso:
-                   
-                   Negro M
-                   Blanco M
-                   Blanco XL
-                   
-                   son productos diferentes
-                   dentro del carrito.
                 ========================================= */
 
                 const existente =
@@ -1482,7 +2200,9 @@ function mostrarProducto(
                    YA EXISTE
                 ========================================= */
 
-                if (existente) {
+                if (
+                    existente
+                ) {
 
                     if (
                         Number(
@@ -1499,6 +2219,7 @@ function mostrarProducto(
                         alert(
                             "No hay más stock disponible."
                         );
+
 
                         return;
 
@@ -1570,7 +2291,7 @@ function mostrarProducto(
 
 
 /* =========================================================
-   8. PRODUCTO NO ENCONTRADO
+   9. PRODUCTO NO ENCONTRADO
 ========================================================= */
 
 function mostrarProductoNoEncontrado() {
@@ -1590,9 +2311,18 @@ function mostrarProductoNoEncontrado() {
 
 
             <a
-                href="./coleccion.html"
+                href="${
+                    idEsSale
+                        ? "./saleoff.html"
+                        : "./coleccion.html"
+                }"
+                class="back-to-collection"
             >
-                VOLVER A COLECCIÓN
+                ${
+                    idEsSale
+                        ? "VOLVER A SALE"
+                        : "VOLVER A COLECCIÓN"
+                }
             </a>
 
         </div>
@@ -1603,17 +2333,26 @@ function mostrarProductoNoEncontrado() {
 
 
 /* =========================================================
-   9. FORMATO DE PRECIO
+   10. FORMATO DE PRECIO
 ========================================================= */
 
-function formatPrice(price) {
+function formatPrice(
+    price
+) {
 
-    return Number(price).toLocaleString(
+    return Number(
+        price
+    ).toLocaleString(
         "es-AR",
         {
-            style: "currency",
-            currency: "ARS",
-            maximumFractionDigits: 0
+            style:
+                "currency",
+
+            currency:
+                "ARS",
+
+            maximumFractionDigits:
+                0
         }
     );
 
@@ -1621,10 +2360,12 @@ function formatPrice(price) {
 
 
 /* =========================================================
-   10. INICIAR
+   11. INICIAR
 ========================================================= */
 
-if (productContainer) {
+if (
+    productContainer
+) {
 
     cargarProducto();
 

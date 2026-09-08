@@ -10,14 +10,14 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Carrito | RUFFIANA</title>
+    <title>SALE OFF | RUFFIANA</title>
 
 
     <link
         rel="stylesheet"
         href="../css/style.css"
     >
-    
+
     <link
         rel="stylesheet"
         href="../css/header.css"
@@ -30,14 +30,13 @@
 
     <link
         rel="stylesheet"
-        href="../css/cart.css"
+        href="../css/coleccion.css"
     >
 
     <link
         rel="stylesheet"
         href="../css/responsive.css"
     >
-
 
     <link
         rel="stylesheet"
@@ -49,15 +48,7 @@
 
 <body>
 
-
-    <!-- =====================================================
-    HEADER
-    ====================================================== -->
-
     <header class="header">
-
-
-        <!-- Barra de anuncio -->
 
         <div class="adbar">
 
@@ -70,14 +61,9 @@
         </div>
 
 
-        <!-- Navegación -->
-
         <nav class="navbar">
 
             <div class="nav-items-container">
-
-
-                <!-- Navegación izquierda -->
 
                 <div class="nav-left">
 
@@ -86,7 +72,6 @@
                         id="hamburger-icon"
                         aria-label="Abrir menú"
                         aria-expanded="false"
-                        aria-controls="mobile-navigation"
                     >
                         <i class="fa-solid fa-bars"></i>
                     </button>
@@ -103,18 +88,13 @@
                 </div>
 
 
-                <!-- Logo -->
-
                 <a
                     href="../index.html"
                     class="nav-logo"
-                    aria-label="RUFFIANA - Inicio"
                 >
                     RUFFIANA
                 </a>
 
-
-                <!-- Navegación derecha -->
 
                 <div class="nav-right">
 
@@ -127,20 +107,18 @@
                     </button>
 
 
-                <a
-                    href="./carrito.html"
-                    class="cart-button"
-                    aria-label="Carrito"
-                >
-                    <i class="fa-solid fa-cart-shopping"></i>
-                </a>
+                    <a
+                        href="./carrito.html"
+                        class="cart-button"
+                        aria-label="Carrito"
+                    >
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </a>
 
                 </div>
 
             </div>
 
-
-            <!-- Menú mobile -->
 
             <div
                 class="mobile-nav"
@@ -158,6 +136,12 @@
                     <li>
                         <a href="./coleccion.html">
                             COLECCIÓN
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="./sale.html">
+                            SALE
                         </a>
                     </li>
 
@@ -182,99 +166,52 @@
     </header>
 
 
-<!-- =====================================================
-CARRITO
-===================================================== -->
+    <main>
 
-<main class="cart-page">
+        <div class="collection-header">
 
-
-    <header class="cart-header">
-
-        <h1>
-            MI CARRITO
-        </h1>
-
-        <p>
-            <a href="../index.html">
-                Inicio
-            </a>
-
-            <span>/</span>
-
-            Carrito
-        </p>
-
-        <span
-            id="cart-count"
-            class="cart-count"
-        >
-            0 productos
-        </span>
-
-    </header>
-
-
-    <!-- Productos -->
-
-    <section class="cart-products-section">
-
-        <ul
-            id="cart-products"
-            class="cart-products"
-        >
-        </ul>
-
-    </section>
-
-
-    <!-- Resumen -->
-
-    <section class="cart-summary">
-
-
-        <div class="cart-total">
-
-            <span>
-                Total
-            </span>
-
-            <strong id="cart-total">
-                $0
-            </strong>
+            <h1 id="collection-title">
+                SALE OFF
+            </h1>
 
         </div>
 
 
-        <a
-            href="./checkout.html"
-            class="checkout-button"
+        <nav
+            class="collection-categories"
+            aria-label="Categorías SALE"
+            id="collection-categories"
+        ></nav>
+
+
+        <section
+            class="products-section"
+            aria-label="Productos SALE"
         >
-            FINALIZAR COMPRA
-        </a>
+
+            <div
+                class="products-grid"
+                id="products-grid"
+            ></div>
+
+        </section>
 
 
-        <a
-            href="./coleccion.html"
-            class="continue-shopping"
-        >
+        <nav
+            class="collection-pagination"
+            id="collection-pagination"
+            aria-label="Páginas de productos"
+        ></nav>
 
-            Seguir comprando
-
-        </a>
-
-
-    </section>
+    </main>
 
 
-</main>
-
-
-<!-- =====================================================
+    <!-- =====================================================
     FOOTER
     ====================================================== -->
 
     <footer class="footer">
+
 
         <div class="footer-content">
 
@@ -398,20 +335,19 @@ CARRITO
 
         </div>
 
+
     </footer>
 
 
+    <script src="../js/menu.js"></script>
 
+    <script src="../js/cart.js"></script>
 
+    <script src="../js/buscador.js"></script>
+    
+    <script src="../js/productossaleoff.js"></script>
 
-<!-- =====================================================
-SCRIPTS
-===================================================== -->
-
-<script src="../js/menu.js"></script>
-
-<script src="../js/cart.js"></script>
-
+    <script src="../js/saleoff.js"></script>
 
 </body>
 
