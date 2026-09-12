@@ -23,27 +23,31 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =====================================================
-       CLICK EN PRODUCTO
-    ===================================================== */
+/* =====================================================
+   CLICK EN PRODUCTO
+===================================================== */
 
-    productsGrid.addEventListener("click", event => {
+productsGrid.addEventListener("click", event => {
 
-        const imagen = event.target.closest(
-            ".product-image[data-product-id]"
-        );
+    const elementoProducto = event.target.closest(
+        ".product-image[data-product-id], .add-to-cart[data-product-id]"
+    );
 
-        if (!imagen) return;
+    if (!elementoProducto) {
+        return;
+    }
 
-        const productId =
-            imagen.dataset.productId;
+    const productId =
+        elementoProducto.dataset.productId;
 
-        if (!productId) return;
+    if (!productId) {
+        return;
+    }
 
-        window.location.href =
-            `./producto.html?id=${encodeURIComponent(productId)}`;
+    window.location.href =
+        `./producto.html?id=${encodeURIComponent(productId)}`;
 
-    });
+});
 
 
     /* =====================================================

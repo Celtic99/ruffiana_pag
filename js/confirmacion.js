@@ -1,6 +1,10 @@
 /* =========================================================
    RUFFIANA — CONFIRMACIÓN DE PEDIDO
+   Envío automático de comprobante por email
 ========================================================= */
+
+const WORKER_URL =
+    "https://ruffiana-email.ruffianafemme.workers.dev";
 
 
 /* =========================================================
@@ -14,7 +18,7 @@ const customerData =
 
 
 /* =========================================================
-   ELEMENTOS
+   ELEMENTOS DEL HTML
 ========================================================= */
 
 const orderNumber =
@@ -41,33 +45,30 @@ const confirmProducts =
 const confirmTotal =
     document.getElementById("confirm-total");
 
+const confirmOrderButton =
+    document.getElementById("confirm-order-button");
+
 
 /* =========================================================
-   VERIFICAR DATOS
+   VERIFICAR CLIENTE
 ========================================================= */
 
 if (!customerData) {
-
     window.location.href =
         "./checkout.html";
-
 }
 
 
 /* =========================================================
-   NÚMERO DE PEDIDO
+   GENERAR NÚMERO DE PEDIDO
 ========================================================= */
 
 const orderId =
     "RUF-" +
     Date.now().toString().slice(-6);
 
-
 orderNumber.textContent =
     orderId;
-
-
-/* Guardamos el número */
 
 sessionStorage.setItem(
     "ruffianaOrderId",
@@ -76,7 +77,7 @@ sessionStorage.setItem(
 
 
 /* =========================================================
-   DATOS DEL CLIENTE
+   MOSTRAR DATOS DEL CLIENTE
 ========================================================= */
 
 confirmName.textContent =
@@ -100,36 +101,32 @@ if (
     confirmShipping.textContent =
         "Envío a domicilio";
 
-
     confirmAddress.innerHTML = `
-
         <p>
             <strong>Dirección:</strong>
-            ${customerData.address}
+            ${customerData.address || ""}
         </p>
 
         <p>
             <strong>Localidad:</strong>
-            ${customerData.city}
+            ${customerData.city || ""}
         </p>
 
         <p>
             <strong>Provincia:</strong>
-            ${customerData.province}
+            ${customerData.province || ""}
         </p>
 
         <p>
             <strong>Código postal:</strong>
-            ${customerData.postalCode}
+            ${customerData.postalCode || ""}
         </p>
-
     `;
 
 } else {
 
     confirmShipping.textContent =
         "Retiro";
-
 }
 
 
@@ -142,24 +139,21 @@ const cartProducts =
         localStorage.getItem("ruffianaCart")
     ) || [];
 
-
 let total = 0;
 
 
 if (cartProducts.length === 0) {
 
     confirmProducts.innerHTML = `
-
         <p>
             No hay productos en el carrito.
         </p>
-
     `;
 
 } else {
 
     cartProducts.forEach(
-        (product) => {
+        function (product) {
 
             const quantity =
                 Number(product.quantity) || 1;
@@ -170,58 +164,45 @@ if (cartProducts.length === 0) {
             const productTotal =
                 price * quantity;
 
-
             total += productTotal;
 
 
             const productElement =
                 document.createElement("div");
 
-
             productElement.className =
                 "confirmation-product";
 
 
             productElement.innerHTML = `
-
                 <div class="confirmation-product-info">
 
-                    <span
-                        class="confirmation-product-name"
-                    >
+                    <span class="confirmation-product-name">
                         ${product.name}
                     </span>
 
-                    <span
-                        class="confirmation-product-details"
-                    >
+                    <span class="confirmation-product-details">
                         Cantidad: ${quantity}
                     </span>
 
                 </div>
 
-
-                <span
-                    class="confirmation-product-price"
-                >
+                <span class="confirmation-product-price">
                     ${formatCurrency(productTotal)}
                 </span>
-
             `;
 
 
             confirmProducts.appendChild(
                 productElement
             );
-
         }
     );
-
 }
 
 
 /* =========================================================
-   TOTAL
+   MOSTRAR TOTAL
 ========================================================= */
 
 confirmTotal.textContent =
@@ -241,102 +222,367 @@ function formatCurrency(value) {
             currency: "ARS"
         }
     );
-
 }
+
 
 /* =========================================================
    CONFIRMAR PEDIDO
 ========================================================= */
 
-const confirmOrderButton =
-    document.getElementById("confirm-order-button");
-
-
 if (confirmOrderButton) {
 
     confirmOrderButton.addEventListener(
         "click",
-        function () {
+        async function () {
 
-            const finalOrder = {
-
-                orderId: orderId,
-
-                customer: customerData,
-
-                products: cartProducts,
-
-                total: total,
-
-                date: new Date().toISOString()
-
-            };
+            if (
+                confirmOrderButton.disabled
+            ) {
+                return;
+            }
 
 
-            /* Guardar pedido */
+            /* -----------------------------------------
+               VERIFICAR EMAIL
+            ----------------------------------------- */
 
-            localStorage.setItem(
-                "ruffianaLastOrder",
-                JSON.stringify(finalOrder)
-            );
+            if (!customerData.email) {
+
+                alert(
+                    "Necesitamos un email para poder enviarte el comprobante del pedido."
+                );
+
+                return;
+            }
 
 
-            console.log(
-                "Pedido RUFFIANA:",
-                finalOrder
-            );
+            /* -----------------------------------------
+               BLOQUEAR BOTÓN
+            ----------------------------------------- */
+
+            confirmOrderButton.disabled =
+                true;
+
+            const originalButtonText =
+                confirmOrderButton.textContent;
+
+            confirmOrderButton.textContent =
+                "ENVIANDO PEDIDO...";
 
 
-            /*
-             * Por ahora NO redirigimos.
-             * Primero comprobamos que todo
-             * quede guardado correctamente.
-             */
+            try {
 
-            alert(
-                "¡Pedido confirmado correctamente! 🤎"
-            );
+                /* -----------------------------------------
+                   ARMAR PEDIDO
+                ----------------------------------------- */
 
-            generatePDF(finalOrder);
+                const finalOrder = {
 
+                    orderId:
+                        orderId,
+
+                    customer:
+                        customerData,
+
+                    products:
+                        cartProducts,
+
+                    total:
+                        total,
+
+                    date:
+                        new Date().toISOString()
+                };
+
+
+                console.log(
+                    "Pedido RUFFIANA:",
+                    finalOrder
+                );
+
+
+                /* -----------------------------------------
+                   GENERAR PDF
+                ----------------------------------------- */
+
+                const pdfDataUri =
+                    generatePDF(
+                        finalOrder
+                    );
+
+
+                /* -----------------------------------------
+                   PRODUCTOS PARA EMAIL
+                ----------------------------------------- */
+
+                const productsText =
+                    orderProductsToText(
+                        finalOrder.products
+                    );
+
+
+                /* -----------------------------------------
+                   FORMA DE ENTREGA
+                ----------------------------------------- */
+
+                const shippingText =
+                    finalOrder.customer.shippingMethod === "envio"
+                        ? "Envío a domicilio"
+                        : "Retiro";
+
+
+                /* -----------------------------------------
+                   DIRECCIÓN
+                ----------------------------------------- */
+
+                let addressText = "";
+
+
+                if (
+                    finalOrder.customer.shippingMethod === "envio"
+                ) {
+
+                    addressText =
+                        `Dirección: ${finalOrder.customer.address || ""}\n` +
+                        `Localidad: ${finalOrder.customer.city || ""}\n` +
+                        `Provincia: ${finalOrder.customer.province || ""}\n` +
+                        `Código postal: ${finalOrder.customer.postalCode || ""}`;
+                }
+
+
+                /* -----------------------------------------
+                   ENVIAR AL WORKER
+                ----------------------------------------- */
+
+                const response =
+                    await fetch(
+                        `${WORKER_URL}/send-order`,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body: JSON.stringify({
+
+                                order_id:
+                                    finalOrder.orderId,
+
+                                customer_name:
+                                    finalOrder.customer.name,
+
+                                customer_phone:
+                                    finalOrder.customer.phone,
+
+                                customer_email:
+                                    finalOrder.customer.email,
+
+                                shipping_method:
+                                    shippingText,
+
+                                address:
+                                    addressText,
+
+                                products:
+                                    productsText,
+
+                                total:
+                                    formatCurrency(
+                                        finalOrder.total
+                                    ),
+
+                                pdf_attachment:
+                                    pdfDataUri
+                            })
+                        }
+                    );
+
+
+                /* -----------------------------------------
+                   RESPUESTA DEL WORKER
+                ----------------------------------------- */
+
+                let result;
+
+
+                try {
+
+                    result =
+                        await response.json();
+
+                } catch (jsonError) {
+
+                    throw new Error(
+                        "El servidor respondió de forma inesperada."
+                    );
+                }
+
+
+                console.log(
+                    "Respuesta del Worker:",
+                    result
+                );
+
+
+                /* -----------------------------------------
+                   VERIFICAR ENVÍO
+                ----------------------------------------- */
+
+                if (
+                    !response.ok ||
+                    !result.success
+                ) {
+
+                    throw new Error(
+                        result.error ||
+                        "No se pudo enviar el comprobante por email."
+                    );
+                }
+
+
+                /* -----------------------------------------
+                   GUARDAR ÚLTIMO PEDIDO
+                ----------------------------------------- */
+
+                localStorage.setItem(
+                    "ruffianaLastOrder",
+                    JSON.stringify(
+                        finalOrder
+                    )
+                );
+
+
+                /* -----------------------------------------
+                   PEDIDO ENVIADO
+                ----------------------------------------- */
+
+                confirmOrderButton.textContent =
+                    "PEDIDO ENVIADO ✓";
+
+
+                alert(
+                    "¡Pedido confirmado correctamente!\n\n" +
+                    "Te enviamos el comprobante a:\n" +
+                    finalOrder.customer.email
+                );
+
+
+                /* -----------------------------------------
+                   ABRIR WHATSAPP
+                ----------------------------------------- */
+
+                sendOrderToWhatsApp(
+                    finalOrder
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Error al confirmar pedido:",
+                    error
+                );
+
+
+                alert(
+                    "No pudimos enviar el comprobante por email.\n\n" +
+                    "El pedido NO fue confirmado todavía.\n\n" +
+                    "Podés volver a intentarlo."
+                );
+
+
+                confirmOrderButton.disabled =
+                    false;
+
+                confirmOrderButton.textContent =
+                    originalButtonText;
+            }
         }
     );
-
 }
+
 
 /* =========================================================
    GENERAR PDF
+   ESTILO COMPROBANTE PROFESIONAL
 ========================================================= */
 
 function generatePDF(order) {
 
-    const {
-        jsPDF
-    } = window.jspdf;
+    const { jsPDF } =
+        window.jspdf;
 
 
     const doc =
-        new jsPDF();
+        new jsPDF({
+            orientation: "portrait",
+            unit: "mm",
+            format: "a4"
+        });
 
 
-    /* =====================================================
-       CONFIGURACIÓN
-    ===================================================== */
+    const pageWidth = 210;
+    const pageHeight = 297;
 
     const margin = 20;
-
-    let y = 20;
+    const right =
+        pageWidth - margin;
 
 
     /* =====================================================
-       COLORES RUFFIANA
+       COLORES
     ===================================================== */
 
-    const brown = [134, 107, 80];
+    const brown =
+        [134, 107, 80];
 
-    const dark = [33, 33, 33];
+    const dark =
+        [45, 45, 45];
 
-    const lightBrown = [177, 140, 104];
+    const gray =
+        [105, 105, 105];
+
+    const beigeLine =
+        [218, 210, 202];
+
+
+    /* =====================================================
+       FECHA
+    ===================================================== */
+
+    const date =
+        new Date(order.date);
+
+    const formattedDate =
+        date.toLocaleDateString(
+            "es-AR",
+            {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric"
+            }
+        );
+
+
+    /* =====================================================
+       FONDO BLANCO
+    ===================================================== */
+
+    doc.setFillColor(
+        255,
+        255,
+        255
+    );
+
+    doc.rect(
+        0,
+        0,
+        pageWidth,
+        pageHeight,
+        "F"
+    );
 
 
     /* =====================================================
@@ -352,195 +598,277 @@ function generatePDF(order) {
         "bold"
     );
 
-    doc.setFontSize(24);
+    doc.setFontSize(25);
 
     doc.text(
         "RUFFIANA",
         margin,
-        y
+        23
     );
-
-
-    y += 10;
 
 
     doc.setTextColor(
-        ...dark
+        ...gray
     );
-
-    doc.setFontSize(11);
 
     doc.setFont(
         "helvetica",
         "normal"
     );
 
+    doc.setFontSize(8);
+
     doc.text(
-        "ORDEN DE PEDIDO",
+        "COMPROBANTE DE PEDIDO",
         margin,
-        y
+        30
     );
 
 
     /* =====================================================
-       PEDIDO Y FECHA
+       NÚMERO DE PEDIDO
     ===================================================== */
 
-    const date =
-        new Date(order.date);
+    doc.setTextColor(
+        ...gray
+    );
 
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
 
-    const formattedDate =
-        date.toLocaleDateString(
-            "es-AR"
-        );
-
+    doc.setFontSize(7);
 
     doc.text(
-        `Pedido: ${order.orderId}`,
-        190,
-        20,
+        "N.º DE PEDIDO",
+        right,
+        17,
         {
             align: "right"
         }
     );
 
+
+    doc.setTextColor(
+        ...brown
+    );
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(12);
+
+    doc.text(
+        order.orderId,
+        right,
+        23,
+        {
+            align: "right"
+        }
+    );
+
+
+    doc.setTextColor(
+        ...gray
+    );
+
+    doc.setFont(
+        "helvetica",
+        "normal"
+    );
+
+    doc.setFontSize(7);
 
     doc.text(
         `Fecha: ${formattedDate}`,
-        190,
-        27,
+        right,
+        30,
         {
             align: "right"
         }
     );
 
 
-    y += 15;
-
-
     /* =====================================================
-       SEPARADOR
+       LÍNEA PRINCIPAL
     ===================================================== */
 
     doc.setDrawColor(
-        220,
-        220,
-        220
+        ...brown
+    );
+
+    doc.setLineWidth(
+        0.5
     );
 
     doc.line(
         margin,
-        y,
-        190,
-        y
+        38,
+        right,
+        38
     );
 
 
-    y += 12;
+    let y = 53;
+
+
+    /* =====================================================
+       FUNCIÓN — TÍTULO DE SECCIÓN
+    ===================================================== */
+
+    function sectionTitle(title) {
+
+        doc.setTextColor(
+            ...brown
+        );
+
+        doc.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        doc.setFontSize(9);
+
+        doc.text(
+            title,
+            margin,
+            y
+        );
+
+
+        y += 6;
+
+
+        doc.setDrawColor(
+            ...beigeLine
+        );
+
+        doc.setLineWidth(
+            0.3
+        );
+
+        doc.line(
+            margin,
+            y,
+            right,
+            y
+        );
+
+
+        y += 8;
+    }
+
+
+    /* =====================================================
+       FUNCIÓN — CAMPO
+    ===================================================== */
+
+    function field(
+        label,
+        value,
+        x,
+        width
+    ) {
+
+        doc.setTextColor(
+            ...gray
+        );
+
+        doc.setFont(
+            "helvetica",
+            "bold"
+        );
+
+        doc.setFontSize(7);
+
+        doc.text(
+            label,
+            x,
+            y
+        );
+
+
+        doc.setTextColor(
+            ...dark
+        );
+
+        doc.setFont(
+            "helvetica",
+            "normal"
+        );
+
+        doc.setFontSize(9);
+
+
+        const lines =
+            doc.splitTextToSize(
+                String(
+                    value || "-"
+                ),
+                width
+            );
+
+
+        doc.text(
+            lines,
+            x,
+            y + 5
+        );
+    }
 
 
     /* =====================================================
        DATOS DEL CLIENTE
     ===================================================== */
 
-    doc.setTextColor(
-        ...lightBrown
+    sectionTitle(
+        "DATOS DEL CLIENTE"
     );
 
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
 
-    doc.setFontSize(10);
-
-    doc.text(
-        "DATOS DEL CLIENTE",
+    field(
+        "Nombre",
+        order.customer.name,
         margin,
-        y
+        75
     );
 
 
-    y += 8;
-
-
-    doc.setTextColor(
-        ...dark
+    field(
+        "WhatsApp",
+        order.customer.phone,
+        110,
+        70
     );
 
-    doc.setFont(
-        "helvetica",
-        "normal"
-    );
 
-    doc.setFontSize(10);
+    y += 17;
 
 
-    doc.text(
-        `Nombre: ${order.customer.name}`,
-        margin,
-        y
-    );
+    if (
+        order.customer.email
+    ) {
 
-    y += 6;
-
-
-    doc.text(
-        `WhatsApp: ${order.customer.phone}`,
-        margin,
-        y
-    );
-
-    y += 6;
-
-
-    if (order.customer.email) {
-
-        doc.text(
-            `Email: ${order.customer.email}`,
+        field(
+            "Email",
+            order.customer.email,
             margin,
-            y
+            170
         );
 
-        y += 6;
-
+        y += 17;
     }
 
 
     /* =====================================================
-       ENTREGA
+       FORMA DE ENTREGA
     ===================================================== */
 
-    y += 6;
-
-
-    doc.setTextColor(
-        ...lightBrown
-    );
-
-    doc.setFont(
-        "helvetica",
-        "bold"
-    );
-
-    doc.text(
-        "FORMA DE ENTREGA",
-        margin,
-        y
-    );
-
-
-    y += 8;
-
-
-    doc.setTextColor(
-        ...dark
-    );
-
-    doc.setFont(
-        "helvetica",
-        "normal"
+    sectionTitle(
+        "FORMA DE ENTREGA"
     );
 
 
@@ -550,67 +878,88 @@ function generatePDF(order) {
             : "Retiro";
 
 
-    doc.text(
+    field(
+        "Modalidad",
         shippingText,
         margin,
-        y
+        75
     );
 
 
-    y += 6;
+    y += 17;
 
 
     if (
         order.customer.shippingMethod === "envio"
     ) {
 
-        doc.text(
-            `Dirección: ${order.customer.address}`,
+        field(
+            "Dirección",
+            order.customer.address,
             margin,
-            y
+            75
         );
 
-        y += 6;
 
-
-        doc.text(
-            `Localidad: ${order.customer.city}`,
-            margin,
-            y
+        field(
+            "Localidad",
+            order.customer.city,
+            110,
+            70
         );
 
-        y += 6;
+
+        y += 17;
 
 
-        doc.text(
-            `Provincia: ${order.customer.province}`,
+        field(
+            "Provincia",
+            order.customer.province,
             margin,
-            y
+            75
         );
 
-        y += 6;
 
-
-        doc.text(
-            `Código postal: ${order.customer.postalCode}`,
-            margin,
-            y
+        field(
+            "Código postal",
+            order.customer.postalCode,
+            110,
+            70
         );
 
-        y += 6;
 
+        y += 17;
     }
 
 
     /* =====================================================
-       PRODUCTOS
+       DETALLE DEL PEDIDO
     ===================================================== */
 
-    y += 10;
+    sectionTitle(
+        "DETALLE DEL PEDIDO"
+    );
 
+
+    const xProduct =
+        margin;
+
+    const xUnit =
+        112;
+
+    const xQty =
+        151;
+
+    const xSubtotal =
+        right;
+
+
+    /* =====================================================
+       ENCABEZADO TABLA
+    ===================================================== */
 
     doc.setTextColor(
-        ...lightBrown
+        ...gray
     );
 
     doc.setFont(
@@ -618,42 +967,39 @@ function generatePDF(order) {
         "bold"
     );
 
-    doc.text(
-        "PRODUCTOS",
-        margin,
-        y
-    );
-
-
-    y += 10;
-
-
-    /* Encabezados */
-
-    doc.setTextColor(
-        ...dark
-    );
-
-    doc.setFontSize(9);
+    doc.setFontSize(7);
 
 
     doc.text(
         "PRODUCTO",
-        margin,
+        xProduct,
         y
+    );
+
+
+    doc.text(
+        "PRECIO UNIT.",
+        xUnit,
+        y,
+        {
+            align: "right"
+        }
     );
 
 
     doc.text(
         "CANT.",
-        125,
-        y
+        xQty,
+        y,
+        {
+            align: "center"
+        }
     );
 
 
     doc.text(
-        "TOTAL",
-        190,
+        "SUBTOTAL",
+        xSubtotal,
         y,
         {
             align: "right"
@@ -665,16 +1011,17 @@ function generatePDF(order) {
 
 
     doc.setDrawColor(
-        220,
-        220,
-        220
+        ...brown
     );
 
+    doc.setLineWidth(
+        0.4
+    );
 
     doc.line(
         margin,
         y,
-        190,
+        right,
         y
     );
 
@@ -683,44 +1030,185 @@ function generatePDF(order) {
 
 
     /* =====================================================
-       LISTA DE PRODUCTOS
+       PRODUCTOS
     ===================================================== */
 
     order.products.forEach(
         function (product) {
 
             const quantity =
-                Number(product.quantity) || 1;
+                Number(
+                    product.quantity
+                ) || 1;
 
 
             const price =
-                Number(product.price) || 0;
+                Number(
+                    product.price
+                ) || 0;
 
 
             const productTotal =
                 price * quantity;
 
 
+            const nameLines =
+                doc.splitTextToSize(
+                    String(
+                        product.name ||
+                        "Producto"
+                    ),
+                    82
+                );
+
+
+            const rowHeight =
+                Math.max(
+                    8,
+                    nameLines.length * 5
+                );
+
+
+            /* ---------------------------------------------
+               NUEVA PÁGINA
+            --------------------------------------------- */
+
+            if (
+                y +
+                rowHeight +
+                35 >
+                pageHeight - 20
+            ) {
+
+                doc.addPage();
+
+
+                y = 25;
+
+
+                doc.setTextColor(
+                    ...brown
+                );
+
+                doc.setFont(
+                    "helvetica",
+                    "bold"
+                );
+
+                doc.setFontSize(14);
+
+
+                doc.text(
+                    "RUFFIANA",
+                    margin,
+                    y
+                );
+
+
+                y += 13;
+
+
+                doc.setTextColor(
+                    ...gray
+                );
+
+                doc.setFont(
+                    "helvetica",
+                    "bold"
+                );
+
+                doc.setFontSize(7);
+
+
+                doc.text(
+                    "PRODUCTO",
+                    xProduct,
+                    y
+                );
+
+
+                doc.text(
+                    "PRECIO UNIT.",
+                    xUnit,
+                    y,
+                    {
+                        align: "right"
+                    }
+                );
+
+
+                doc.text(
+                    "CANT.",
+                    xQty,
+                    y,
+                    {
+                        align: "center"
+                    }
+                );
+
+
+                doc.text(
+                    "SUBTOTAL",
+                    xSubtotal,
+                    y,
+                    {
+                        align: "right"
+                    }
+                );
+
+
+                y += 5;
+
+
+                doc.setDrawColor(
+                    ...brown
+                );
+
+
+                doc.line(
+                    margin,
+                    y,
+                    right,
+                    y
+                );
+
+
+                y += 8;
+            }
+
+
+            /* ---------------------------------------------
+               NOMBRE
+            --------------------------------------------- */
+
+            doc.setTextColor(
+                ...dark
+            );
+
+            doc.setFont(
+                "helvetica",
+                "normal"
+            );
+
+            doc.setFontSize(
+                8.5
+            );
+
+
             doc.text(
-                product.name,
-                margin,
+                nameLines,
+                xProduct,
                 y
             );
 
 
-            doc.text(
-                String(quantity),
-                128,
-                y,
-                {
-                    align: "center"
-                }
-            );
-
+            /* ---------------------------------------------
+               PRECIO UNITARIO
+            --------------------------------------------- */
 
             doc.text(
-                formatCurrency(productTotal),
-                190,
+                formatCurrency(price),
+                xUnit,
                 y,
                 {
                     align: "right"
@@ -728,8 +1216,67 @@ function generatePDF(order) {
             );
 
 
-            y += 8;
+            /* ---------------------------------------------
+               CANTIDAD
+            --------------------------------------------- */
 
+            doc.text(
+                String(quantity),
+                xQty,
+                y,
+                {
+                    align: "center"
+                }
+            );
+
+
+            /* ---------------------------------------------
+               SUBTOTAL
+            --------------------------------------------- */
+
+            doc.setFont(
+                "helvetica",
+                "bold"
+            );
+
+
+            doc.text(
+                formatCurrency(
+                    productTotal
+                ),
+                xSubtotal,
+                y,
+                {
+                    align: "right"
+                }
+            );
+
+
+            y += rowHeight;
+
+
+            /* ---------------------------------------------
+               LÍNEA DEL PRODUCTO
+            --------------------------------------------- */
+
+            doc.setDrawColor(
+                ...beigeLine
+            );
+
+            doc.setLineWidth(
+                0.2
+            );
+
+
+            doc.line(
+                margin,
+                y - 3,
+                right,
+                y - 3
+            );
+
+
+            y += 5;
         }
     );
 
@@ -742,41 +1289,61 @@ function generatePDF(order) {
 
 
     doc.setDrawColor(
-        220,
-        220,
-        220
+        ...brown
+    );
+
+    doc.setLineWidth(
+        0.5
     );
 
 
     doc.line(
-        margin,
+        115,
         y,
-        190,
+        right,
         y
     );
 
 
-    y += 12;
+    y += 9;
 
+
+    doc.setTextColor(
+        ...gray
+    );
 
     doc.setFont(
         "helvetica",
         "bold"
     );
 
-    doc.setFontSize(13);
+    doc.setFontSize(9);
 
 
     doc.text(
         "TOTAL",
-        margin,
+        115,
         y
     );
 
 
+    doc.setTextColor(
+        ...brown
+    );
+
+    doc.setFont(
+        "helvetica",
+        "bold"
+    );
+
+    doc.setFontSize(15);
+
+
     doc.text(
-        formatCurrency(order.total),
-        190,
+        formatCurrency(
+            order.total
+        ),
+        right,
         y,
         {
             align: "right"
@@ -785,57 +1352,125 @@ function generatePDF(order) {
 
 
     /* =====================================================
-       PIE
+       PIE DE PÁGINA
     ===================================================== */
 
-    y += 25;
+    const footerY =
+        pageHeight - 18;
 
+
+    doc.setDrawColor(
+        ...beigeLine
+    );
+
+    doc.setLineWidth(
+        0.3
+    );
+
+
+    doc.line(
+        margin,
+        footerY - 5,
+        right,
+        footerY - 5
+    );
+
+
+    doc.setTextColor(
+        ...gray
+    );
 
     doc.setFont(
         "helvetica",
         "normal"
     );
 
-    doc.setFontSize(9);
+    doc.setFontSize(7);
 
-    doc.setTextColor(
-        120,
-        120,
-        120
+
+    doc.text(
+        "RUFFIANA",
+        margin,
+        footerY
     );
 
 
     doc.text(
-        "Gracias por comprar en RUFFIANA 🤎",
-        105,
-        y,
+        "ruffianafemme@gmail.com",
+        pageWidth / 2,
+        footerY,
         {
             align: "center"
         }
     );
 
 
-    /* =====================================================
-       DESCARGAR
-    ===================================================== */
-
-    doc.save(
-        `${order.orderId}-RUFFIANA.pdf`
+    doc.text(
+        "WhatsApp: +54 9 11 6555-7412",
+        right,
+        footerY,
+        {
+            align: "right"
+        }
     );
 
+
     /* =====================================================
-    WHATSAPP
+       DEVOLVER PDF
     ===================================================== */
 
-    sendOrderToWhatsApp(order);
-
+    return doc.output(
+        "datauristring"
+    );
 }
 
+
 /* =========================================================
-   ENVIAR PEDIDO A WHATSAPP
+   PRODUCTOS → TEXTO PARA EMAIL
 ========================================================= */
 
-function sendOrderToWhatsApp(order) {
+function orderProductsToText(
+    products
+) {
+
+    return products.map(
+        function (product) {
+
+            const quantity =
+                Number(
+                    product.quantity
+                ) || 1;
+
+
+            const price =
+                Number(
+                    product.price
+                ) || 0;
+
+
+            const productTotal =
+                price * quantity;
+
+
+            return (
+                `${product.name}\n` +
+                `Cantidad: ${quantity}\n` +
+                `Precio: ${formatCurrency(productTotal)}`
+            );
+        }
+    ).join(
+        "\n\n"
+    );
+}
+
+
+/* =========================================================
+   ENVIAR PEDIDO POR WHATSAPP
+========================================================= */
+
+function sendOrderToWhatsApp(
+    order
+) {
 
     const phone =
         "5491165557412";
@@ -850,37 +1485,53 @@ function sendOrderToWhatsApp(order) {
 
 
     message +=
-        `Fecha: ${new Date(order.date).toLocaleDateString("es-AR")}\n\n`;
+        `Fecha: ${
+            new Date(
+                order.date
+            ).toLocaleDateString(
+                "es-AR"
+            )
+        }\n\n`;
 
 
-    /* =====================================================
-       CLIENTE
-    ===================================================== */
+    /* -----------------------------------------
+       DATOS DEL CLIENTE
+    ----------------------------------------- */
 
     message +=
         `👤 DATOS DEL CLIENTE\n`;
 
-    message +=
-        `Nombre: ${order.customer.name}\n`;
 
     message +=
-        `WhatsApp: ${order.customer.phone}\n`;
+        `Nombre: ${
+            order.customer.name
+        }\n`;
 
 
-    if (order.customer.email) {
+    message +=
+        `WhatsApp: ${
+            order.customer.phone
+        }\n`;
+
+
+    if (
+        order.customer.email
+    ) {
 
         message +=
-            `Email: ${order.customer.email}\n`;
-
+            `Email: ${
+                order.customer.email
+            }\n`;
     }
 
 
-    message += `\n`;
+    message +=
+        `\n`;
 
 
-    /* =====================================================
+    /* -----------------------------------------
        ENTREGA
-    ===================================================== */
+    ----------------------------------------- */
 
     message +=
         `📦 ENTREGA\n`;
@@ -893,32 +1544,44 @@ function sendOrderToWhatsApp(order) {
         message +=
             `Forma: Envío a domicilio\n`;
 
-        message +=
-            `Dirección: ${order.customer.address}\n`;
 
         message +=
-            `Localidad: ${order.customer.city}\n`;
+            `Dirección: ${
+                order.customer.address
+            }\n`;
+
 
         message +=
-            `Provincia: ${order.customer.province}\n`;
+            `Localidad: ${
+                order.customer.city
+            }\n`;
+
 
         message +=
-            `Código postal: ${order.customer.postalCode}\n`;
+            `Provincia: ${
+                order.customer.province
+            }\n`;
+
+
+        message +=
+            `Código postal: ${
+                order.customer.postalCode
+            }\n`;
 
     } else {
 
         message +=
             `Forma: Retiro\n`;
-
     }
 
 
-    message += `\n`;
+    message +=
+        `\n`;
 
 
-    /* =====================================================
+    /* -----------------------------------------
        PRODUCTOS
-    ===================================================== */
+    ----------------------------------------- */
 
     message +=
         `🛍️ PRODUCTOS\n\n`;
@@ -928,11 +1591,15 @@ function sendOrderToWhatsApp(order) {
         function (product) {
 
             const quantity =
-                Number(product.quantity) || 1;
+                Number(
+                    product.quantity
+                ) || 1;
 
 
             const price =
-                Number(product.price) || 0;
+                Number(
+                    product.price
+                ) || 0;
 
 
             const productTotal =
@@ -942,35 +1609,51 @@ function sendOrderToWhatsApp(order) {
             message +=
                 `${product.name}\n`;
 
+
             message +=
                 `Cantidad: ${quantity}\n`;
 
-            message +=
-                `Precio: ${formatCurrency(productTotal)}\n\n`;
 
+            message +=
+                `Precio: ${
+                    formatCurrency(
+                        productTotal
+                    )
+                }\n\n`;
         }
     );
 
 
-    /* =====================================================
+    /* -----------------------------------------
        TOTAL
-    ===================================================== */
+    ----------------------------------------- */
 
     message +=
-        `💰 TOTAL: ${formatCurrency(order.total)}\n\n`;
+        `💰 TOTAL: ${
+            formatCurrency(
+                order.total
+            )
+        }\n\n`;
 
 
     message +=
         `¡Gracias por tu compra! 🤎`;
 
 
+    /* -----------------------------------------
+       ABRIR WHATSAPP
+    ----------------------------------------- */
+
     const whatsappURL =
-        `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+        `https://wa.me/${phone}?text=${
+            encodeURIComponent(
+                message
+            )
+        }`;
 
 
     window.open(
         whatsappURL,
         "_blank"
     );
-
 }

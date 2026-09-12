@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Prueba Email RUFFIANA</title>
+</head>
+
+<body>
+
+    <h1>Prueba de envío RUFFIANA</h1>
+
+    <button id="test-button">
+        ENVIAR EMAIL DE PRUEBA
+    </button>
+
+    <p id="status"></p>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <script>
+
+        const WORKER_URL =
+            "https://ruffiana-email.ruffianafemme.workers.dev";
+
+        const button =
+            document.getElementById("test-button");
+
+        const status =
+            document.getElementById("status");
+
+
+        button.addEventListener("click", async () => {
+
+            button.disabled = true;
+
+            status.textContent =
+                "Generando PDF y enviando email...";
+
+
+            try {
+
+                // =====================================================
+                // 1. CREAR PDF DE PRUEBA
+                // =====================================================
+
+                const { jsPDF } = window.jspdf;
+
+                const doc = new jsPDF();
+
+                doc.setFontSize(24);
+
+                doc.text(
+                    "RUFFIANA",
+                    20,
+                    30
+                );
+
+                doc.setFontSize(16);
+
+                doc.text(
+                    "PRUEBA DE EMAIL",
+                    20,
+                    50
+                );
+
+                doc.setFontSize(12);
+
+                doc.text(
+                    "Este PDF fue generado automáticamente.",
+                    20,
+                    70
+                );
+
+                doc.text(
+                    "Si recibís este archivo adjunto,",
+                    20,
+                    85
+                );
+
+                doc.text(
+                    "el sistema de emails funciona correctamente.",
+                    20,
+                    100
+                );
+
+
+                // =====================================================
+                // 2. OBTENER PDF COMO DATA URI
+                // =====================================================
+
+                const pdfDataUri =
+                    doc.output("datauristring");
+
+
+                // =====================================================
+                // 3. DATOS DE PRUEBA
+                // =====================================================
+
+                const testOrder = {
+
+                    order_id:
+                        "RUF-TEST",
+
+                    customer_name:
+                        "Prueba RUFFIANA",
+
+                    customer_phone:
+                        "5491165557412",
+
+                    customer_email:
+                        "ruffianafemme@gmail.com",
+
+                    shipping_method:
+                        "Prueba",
+
+                    address:
+                        "",
+
+                    products:
+                        "Producto de prueba\nCantidad: 1\nPrecio: $10.000",
+
+                    total:
+                        "$10.000",
+
+                    pdf_attachment:
+                        pdfDataUri
+                };
+
+
+                // =====================================================
+                // 4. ENVIAR AL WORKER
+                // =====================================================
+
+                const response =
+                    await fetch(
+                        `${WORKER_URL}/send-order`,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(testOrder)
+                        }
+                    );
+
+
+                // =====================================================
+                // 5. LEER RESPUESTA
+                // =====================================================
+
+                const result =
+                    await response.json();
+
+
+                console.log(
+                    "Respuesta del Worker:",
+                    result
+                );
+
+
+                if (!response.ok || !result.success) {
+
+                    throw new Error(
+                        result.error ||
+                        "El Worker rechazó el envío."
+                    );
+                }
+
+
+                // =====================================================
+                // 6. ÉXITO
+                // =====================================================
+
+                status.textContent =
+                    "¡EMAIL ENVIADO CORRECTAMENTE! 🤎";
+
+                alert(
+                    "¡Email enviado correctamente! 🤎\n\n" +
+                    "Revisá ruffianafemme@gmail.com"
+                );
+
+
+            } catch (error) {
+
+                console.error(error);
+
+                status.textContent =
+                    "Error: " + error.message;
+
+                alert(
+                    "Hubo un error:\n\n" +
+                    error.message
+                );
+
+
+            } finally {
+
+                button.disabled = false;
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
