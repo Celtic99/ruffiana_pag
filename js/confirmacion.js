@@ -39,8 +39,17 @@ const confirmShipping =
 const confirmAddress =
     document.getElementById("confirm-address");
 
+const confirmShippingMethod =
+    document.getElementById("confirm-shipping-method");
+
 const confirmProducts =
     document.getElementById("confirm-products");
+
+const confirmSubtotal =
+    document.getElementById("confirm-subtotal");
+
+const confirmShippingCost =
+    document.getElementById("confirm-shipping-cost");
 
 const confirmTotal =
     document.getElementById("confirm-total");
@@ -94,6 +103,20 @@ confirmEmail.textContent =
    FORMA DE ENTREGA
 ========================================================= */
 
+const shippingCarrier =
+    customerData.shippingCarrier ||
+    (
+        customerData.shippingMethod === "envio" &&
+        (
+            customerData.province ===
+                "Ciudad Autónoma de Buenos Aires" ||
+            customerData.province ===
+                "Buenos Aires"
+        )
+            ? "Motomensajería"
+            : ""
+    );
+
 if (
     customerData.shippingMethod === "envio"
 ) {
@@ -120,6 +143,11 @@ if (
         <p>
             <strong>Código postal:</strong>
             ${customerData.postalCode || ""}
+        </p>
+
+        <p>
+            <strong>Método de envío:</strong>
+            ${shippingCarrier}
         </p>
     `;
 
@@ -202,11 +230,69 @@ if (cartProducts.length === 0) {
 
 
 /* =========================================================
-   MOSTRAR TOTAL
+   MOSTRAR SUBTOTAL, ENVÍO Y TOTAL
 ========================================================= */
 
-confirmTotal.textContent =
+const shippingCost =
+    customerData.shippingCost ??
+    (
+        customerData.province ===
+            "Ciudad Autónoma de Buenos Aires"
+            ? 4311
+            : customerData.province ===
+                "Buenos Aires"
+                ? 7100
+                : null
+    );
+
+    
+/* -----------------------------------------
+   SUBTOTAL
+----------------------------------------- */
+
+confirmSubtotal.textContent =
     formatCurrency(total);
+
+
+/* -----------------------------------------
+   ENVÍO
+----------------------------------------- */
+
+if (
+    customerData.shippingMethod === "retiro"
+) {
+
+    confirmShippingCost.textContent =
+        formatCurrency(0);
+
+} else if (
+    shippingCost === null ||
+    shippingCost === undefined
+) {
+
+    confirmShippingCost.textContent =
+        "$ A COTIZAR";
+
+} else {
+
+    confirmShippingCost.textContent =
+        formatCurrency(shippingCost);
+
+}
+
+
+/* -----------------------------------------
+   TOTAL
+----------------------------------------- */
+
+const finalTotal =
+    shippingCost === null ||
+    shippingCost === undefined
+        ? total
+        : total + Number(shippingCost);
+
+confirmTotal.textContent =
+    formatCurrency(finalTotal);
 
 
 /* =========================================================
@@ -288,7 +374,7 @@ if (confirmOrderButton) {
                         cartProducts,
 
                     total:
-                        total,
+                        finalTotal,
 
                     date:
                         new Date().toISOString()
@@ -381,6 +467,10 @@ if (confirmOrderButton) {
 
                                 shipping_method:
                                     shippingText,
+
+                                shipping_carrier: shippingCarrier,
+
+                                shipping_cost: shippingCost,
 
                                 address:
                                     addressText,

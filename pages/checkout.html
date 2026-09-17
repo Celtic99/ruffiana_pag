@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="icon" type="logo" href="https://media.discordapp.net/attachments/1369088341806682162/1549955371035267073/perfil3.png?ex=6aac93ed&is=6aab426d&hm=20d282a0bd9e2254ed91b00e723239c7509928349552ae250d4722e37c009782&=&format=webp&quality=lossless&width=768&height=679">
+
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -168,13 +171,21 @@
 
     </header>
 
-    <!-- =====================================================  -->
+<!-- ===================================================== CHECKOUT ====================================================== --> 
 
-    <section class="checkout-form">
+<section class="checkout-form">
 
-    <h2>DATOS DEL PEDIDO</h2>
+    <h2>
+        DATOS DEL PEDIDO
+    </h2>
 
     <form id="checkout-form">
+
+        <!-- =================================================
+             DATOS DEL CLIENTE
+        ================================================== -->
+
+        <!-- Nombre -->
 
         <div class="form-group">
 
@@ -193,6 +204,8 @@
         </div>
 
 
+        <!-- WhatsApp -->
+
         <div class="form-group">
 
             <label for="customer-phone">
@@ -210,6 +223,8 @@
         </div>
 
 
+        <!-- Email -->
+
         <div class="form-group">
 
             <label for="customer-email">
@@ -221,150 +236,260 @@
                 id="customer-email"
                 name="customerEmail"
                 placeholder="tuemail@gmail.com"
+                required
             >
 
         </div>
 
 
+        <!-- =================================================
+             FORMA DE ENTREGA
+        ================================================== -->
+
         <div class="form-group">
 
-    <label for="shipping-method">
-        Forma de entrega
-    </label>
+            <label for="shipping-method">
+                Forma de entrega
+            </label>
 
-    <select
-        id="shipping-method"
-        name="shippingMethod"
-        required
-    >
+            <select
+                id="shipping-method"
+                name="shippingMethod"
+                required
+            >
 
-        <option value="">
-            Seleccioná una opción
-        </option>
+                <option value="">
+                    Seleccioná una opción
+                </option>
 
-        <option value="envio">
-            Envío a domicilio
-        </option>
+                <option value="envio">
+                    Envío a domicilio
+                </option>
 
-        <option value="retiro">
-            Retiro
-        </option>
+                <option value="retiro">
+                    Retiro en showroom
+                </option>
 
-    </select>
+            </select>
 
-</div>
+        </div>
 
 
-<!-- ================= DATOS DE ENVÍO ================= -->
+        <!-- =================================================
+             DATOS DE ENVÍO
+        ================================================== -->
 
-<div id="shipping-fields" hidden>
-
-    <!-- Dirección -->
-
-    <div class="form-group">
-
-        <label for="customer-address">
-            Dirección
-        </label>
-
-        <input
-            type="text"
-            id="customer-address"
-            name="customerAddress"
-            placeholder="Calle y número"
+        <div
+            id="shipping-fields"
+            hidden
         >
 
-    </div>
+
+            <!-- =================
+                 PROVINCIA
+            ================== -->
+
+            <div class="form-group">
+
+                <label for="customer-province">
+                    Provincia
+                </label>
+
+                <select
+                    id="customer-province"
+                    name="customerProvince"
+                >
+
+                    <option value="">
+                        Seleccioná una provincia
+                    </option>
+
+                </select>
+
+            </div>
 
 
-    <!-- Localidad -->
+            <!-- =================
+                 LOCALIDAD BUENOS AIRES
+            ================== -->
 
-    <div class="form-group">
+            <div
+                class="form-group"
+                id="city-group"
+                hidden
+            >
 
-        <label for="customer-city">
-            Localidad
-        </label>
+                <label for="customer-city">
+                    Localidad
+                </label>
 
-        <input
-            type="text"
-            id="customer-city"
-            name="customerCity"
-            placeholder="Ej: Lanús"
+                <select
+                    id="customer-city"
+                    name="customerCity"
+                >
+
+                    <option value="">
+                        Seleccioná una localidad
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- =================
+                 LOCALIDAD OTRAS PROVINCIAS
+            ================== -->
+
+            <div
+                class="form-group"
+                id="other-city-group"
+                hidden
+            >
+
+                <label for="customer-city-other">
+                    Localidad
+                </label>
+
+                <input
+                    type="text"
+                    id="customer-city-other"
+                    name="customerCityOther"
+                    placeholder="Ingresá tu localidad"
+                >
+
+            </div>
+
+
+            <!-- =================
+                 EMPRESA DE ENVÍO
+            ================== -->
+
+            <div
+                class="form-group"
+                id="carrier-group"
+                hidden
+            >
+
+                <label for="shipping-carrier">
+                    Empresa de envío
+                </label>
+
+                <select
+                    id="shipping-carrier"
+                    name="shippingCarrier"
+                >
+
+                    <option value="">
+                        Seleccioná una opción
+                    </option>
+
+                    <option value="correo-argentino">
+                        Correo Argentino
+                    </option>
+
+                    <option value="via-cargo">
+                        Vía Cargo
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- =================
+                 RESUMEN DE ENVÍO
+            ================== -->
+
+            <div
+                id="shipping-summary"
+                hidden
+            >
+
+                <span id="shipping-summary-label"></span>
+
+                <strong id="shipping-summary-price"></strong>
+
+            </div>
+
+
+            <!-- =================
+                 DIRECCIÓN
+            ================== -->
+
+            <div class="form-group">
+
+                <label for="customer-address">
+                    Dirección
+                </label>
+
+                <input
+                    type="text"
+                    id="customer-address"
+                    name="customerAddress"
+                    placeholder="Calle y número"
+                >
+
+            </div>
+
+
+            <!-- =================
+                 CÓDIGO POSTAL
+            ================== -->
+
+            <div class="form-group">
+
+                <label for="customer-postal-code">
+                    Código postal
+                </label>
+
+                <input
+                    type="text"
+                    id="customer-postal-code"
+                    name="customerPostalCode"
+                    placeholder="Ej: 1824"
+                >
+
+            </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             OBSERVACIONES
+        ================================================== -->
+
+        <div class="form-group">
+
+            <label for="customer-notes">
+                Observaciones
+            </label>
+
+            <textarea
+                id="customer-notes"
+                name="customerNotes"
+                placeholder="Alguna aclaración sobre tu pedido..."
+            ></textarea>
+
+        </div>
+
+
+        <!-- =================================================
+             BOTÓN
+        ================================================== -->
+
+        <button
+            type="submit"
+            class="checkout-button"
         >
+            CONFIRMAR PEDIDO
+        </button>
 
-    </div>
-
-
-    <!-- Provincia -->
-
-    <div class="form-group">
-
-        <label for="customer-province">
-            Provincia
-        </label>
-
-        <select
-            id="customer-province"
-            name="customerProvince"
-        >
-
-            <option value="">
-                Seleccioná una provincia
-            </option>
-
-        </select>
-
-    </div>
-
-
-    <!-- Código postal -->
-
-    <div class="form-group">
-
-        <label for="customer-postal-code">
-            Código postal
-        </label>
-
-        <input
-            type="text"
-            id="customer-postal-code"
-            name="customerPostalCode"
-            placeholder="Ej: 1824"
-        >
-
-    </div>
-
-</div>
-
-
-<!-- Observaciones -->
-
-<div class="form-group">
-
-    <label for="customer-notes">
-        Observaciones
-    </label>
-
-    <textarea
-        id="customer-notes"
-        name="customerNotes"
-        placeholder="Alguna aclaración sobre tu pedido..."
-    ></textarea>
-
-</div>
-
-
-<button
-    type="submit"
-    class="checkout-button"
->
-    CONFIRMAR PEDIDO
-</button>
 
     </form>
 
 </section>
-
 
 <!-- =====================================================
     FOOTER
@@ -503,6 +628,7 @@
 <script src="../js/menu.js"></script>
 
 <script src="../js/datos/provincias.js"></script>
+<script src="../js/datos/localidades-envio.js"></script>
 <script src="../js/checkout.js"></script>
 <script src="../js/cart.js"></script>
 

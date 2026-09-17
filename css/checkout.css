@@ -141,3 +141,374 @@
     flex-direction: column;
     gap: 22px;
 }
+
+/* =========================================
+ENVÍO
+========================================= */
+
+[hidden] {
+    display: none !important;
+}
+
+/* =========================================================
+   RESUMEN DE ENVÍO
+========================================================= */
+
+#shipping-summary {
+    width: 100%;
+    box-sizing: border-box;
+
+    margin-top: 4px;
+    margin-bottom: 22px;
+
+    padding: 14px 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background: #f8f5f1;
+    border: 1px solid #e4ddd5;
+
+    font-size: .85rem;
+}
+
+
+#shipping-summary-label {
+    color: #666;
+}
+
+
+#shipping-summary-price {
+    color: var(--color-accent);
+    font-weight: 600;
+}
+
+#shipping-fields .form-group {
+    margin-bottom: 22px;
+}
+
+#shipping-fields .form-group:last-child {
+    margin-bottom: 0;
+}
+
+
+/* =========================================================
+   SELECTS
+========================================================= */
+
+/* Select nativo */
+.form-group select {
+    width: 100%;
+    min-height: 48px;
+    padding: 14px 45px 14px 16px;
+
+    box-sizing: border-box;
+
+    background-color: var(--color-white);
+    border: 1px solid #d8d1cb;
+
+    color: #333;
+    font-family: inherit;
+    font-size: .9rem;
+
+    outline: none;
+
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    background-image:
+        linear-gradient(
+            45deg,
+            transparent 50%,
+            #866b50 50%
+        ),
+        linear-gradient(
+            135deg,
+            #866b50 50%,
+            transparent 50%
+        );
+
+    background-position:
+        calc(100% - 20px) 20px,
+        calc(100% - 15px) 20px;
+
+    background-size:
+        5px 5px,
+        5px 5px;
+
+    background-repeat: no-repeat;
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease;
+}
+
+
+/* Hover */
+.form-group select:hover {
+    border-color: var(--color-accent);
+}
+
+
+/* Focus */
+.form-group select:focus {
+    border-color: var(--color-accent);
+
+    box-shadow:
+        0 0 0 2px rgba(177, 140, 104, .10);
+}
+
+
+/* =========================================================
+   SELECT CUSTOM GENERADO POR JAVASCRIPT
+========================================================= */
+
+.custom-select-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+
+/* Ocultar select original */
+.custom-select-native {
+    position: absolute !important;
+
+    width: 1px !important;
+    height: 1px !important;
+
+    padding: 0 !important;
+    margin: -1px !important;
+
+    overflow: hidden !important;
+
+    clip: rect(0, 0, 0, 0) !important;
+
+    white-space: nowrap !important;
+
+    border: 0 !important;
+
+    opacity: 0 !important;
+
+    pointer-events: none !important;
+}
+
+
+/* Contenedor */
+.custom-select {
+    position: relative;
+    width: 100%;
+}
+
+
+/* Botón visible */
+.custom-select-trigger {
+    width: 100%;
+    min-height: 48px;
+
+    padding: 14px 45px 14px 16px;
+
+    display: flex;
+    align-items: center;
+
+    position: relative;
+
+    box-sizing: border-box;
+
+    background: var(--color-white);
+
+    border: 1px solid #d8d1cb;
+
+    color: #333;
+
+    font-family: inherit;
+    font-size: .9rem;
+
+    cursor: pointer;
+
+    transition:
+        border-color .25s ease,
+        box-shadow .25s ease,
+        background-color .25s ease;
+}
+
+
+/* Placeholder */
+.custom-select-trigger.placeholder {
+    color: #999;
+}
+
+
+/* Hover */
+.custom-select-trigger:hover {
+    border-color: var(--color-accent);
+}
+
+
+/* Abierto */
+.custom-select.open .custom-select-trigger {
+    border-color: var(--color-accent);
+
+    background: #fff;
+
+    box-shadow:
+        0 0 0 2px rgba(177, 140, 104, .10);
+}
+
+
+/* =========================================================
+   FLECHA
+========================================================= */
+
+.custom-select-arrow {
+    position: absolute;
+
+    right: 17px;
+    top: 50%;
+
+    width: 7px;
+    height: 7px;
+
+    border-right: 1px solid #866b50;
+    border-bottom: 1px solid #866b50;
+
+    transform:
+        translateY(-70%)
+        rotate(45deg);
+
+    transition:
+        transform .2s ease;
+}
+
+
+.custom-select.open
+.custom-select-arrow {
+
+    transform:
+        translateY(-25%)
+        rotate(225deg);
+}
+
+
+/* =========================================================
+   OPCIONES
+========================================================= */
+
+.custom-select-options {
+
+    position: absolute;
+
+    top: calc(100% + 4px);
+    left: 0;
+
+    width: 100%;
+
+    max-height: 240px;
+
+    overflow-y: auto;
+
+    box-sizing: border-box;
+
+    background: #fff;
+
+    border: 1px solid #d8d1cb;
+
+    box-shadow:
+        0 8px 18px rgba(60, 45, 30, .10);
+
+    z-index: 9999;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform:
+        translateY(-4px);
+
+    transition:
+        opacity .18s ease,
+        transform .18s ease,
+        visibility .18s ease;
+}
+
+
+/* Mostrar opciones */
+.custom-select.open
+.custom-select-options {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform:
+        translateY(0);
+}
+
+
+/* Cada opción */
+.custom-select-option {
+
+    display: flex;
+
+    align-items: center;
+
+    width: 100%;
+
+    min-height: 44px;
+
+    padding: 12px 16px;
+
+    box-sizing: border-box;
+
+    background: #fff;
+
+    color: #333;
+
+    font-family: inherit;
+
+    font-size: .9rem;
+
+    line-height: 1.2;
+
+    cursor: pointer;
+
+    transition:
+        background-color .18s ease,
+        color .18s ease;
+}
+
+
+/* Hover opción */
+.custom-select-option:hover {
+
+    background: #f4efe8;
+
+    color: #866b50;
+}
+
+
+/* Opción seleccionada */
+.custom-select-option.selected {
+
+    background: #eee7df;
+
+    color: #866b50;
+
+    font-weight: 500;
+}
+
+
+/* Scroll */
+.custom-select-options::-webkit-scrollbar {
+    width: 5px;
+}
+
+.custom-select-options::-webkit-scrollbar-track {
+    background: #f8f5f1;
+}
+
+.custom-select-options::-webkit-scrollbar-thumb {
+    background: #d2c3b4;
+}

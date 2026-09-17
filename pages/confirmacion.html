@@ -11,6 +11,8 @@
     >
 
     <title>Confirmar pedido | RUFFIANA</title>
+    <link rel="icon" type="logo" href="https://media.discordapp.net/attachments/1369088341806682162/1549955371035267073/perfil3.png?ex=6aac93ed&is=6aab426d&hm=20d282a0bd9e2254ed91b00e723239c7509928349552ae250d4722e37c009782&=&format=webp&quality=lossless&width=768&height=679">
+
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -233,6 +235,10 @@
 
             <div id="confirm-address"></div>
 
+            <div id="confirm-shipping-method"></div>
+
+            <div id="confirm-shipping-cost-detail"></div>
+
         </section>
 
 
@@ -251,17 +257,39 @@
 
         <!-- ================= TOTAL ================= -->
 
-        <section class="confirmation-total">
+<section class="confirmation-total">
 
-            <span>
-                TOTAL
-            </span>
+    <div class="confirmation-total-row">
+        <span>
+            Subtotal
+        </span>
 
-            <strong id="confirm-total">
-                $0
-            </strong>
+        <strong id="confirm-subtotal">
+            $0
+        </strong>
+    </div>
 
-        </section>
+    <div class="confirmation-total-row">
+        <span>
+            Envío
+        </span>
+
+        <strong id="confirm-shipping-cost">
+            $0
+        </strong>
+    </div>
+
+    <div class="confirmation-total-final">
+        <span>
+            TOTAL
+        </span>
+
+        <strong id="confirm-total">
+            $0
+        </strong>
+    </div>
+
+</section>
 
 
         <div class="confirmation-actions">

@@ -103,6 +103,17 @@ IMAGENES DE CATEGORIAS
 }
 
 
+/* banner */
+
+.banner-ruffiana{
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.3;
+}
+
 
 /* =========================================================
 MINI ZOOM
